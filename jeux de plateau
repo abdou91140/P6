@@ -1,0 +1,26 @@
+ function mapGenerate(positionX,positionY) {
+     
+        for(let i = 0 ; i < positionX; i++ ){
+            for(let j = 0 ; j < positionY; j++ ){
+             
+
+                    var player =  "<div class='player'></div>";
+                    $("#map").append(player)
+            
+          
+                    var obstacle = "<div class='obstacle'></div>";
+                    $("#map").append(obstacle); 
+                    
+             
+                var cell= "<div class='cell'></div>";
+                $("#map").append(cell)   
+                
+               } 
+            }
+        }
+mapGenerate(10,10);
+
+function randomNumber(){
+    return Math.floor(Math.random() * 40);
+}
+var random = randomNumber();
