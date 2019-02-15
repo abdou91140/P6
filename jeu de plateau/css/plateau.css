@@ -1,0 +1,29 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.cell{
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+}
+.cellBlack{
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    background: black;
+}
+.fighter{
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    background: red;
+    
+}
+.weapons{
+    width: 100px;
+    height: 100px;
+    border: 1px solid;
+    background: yellow;
+    
+}
