@@ -1,46 +1,64 @@
- let empty = 0;
-let full = 1;
-let index = [];
-function randomNumber() {
-    return Math.floor(Math.random() * 40);
-}
-var random = randomNumber();
-
-class fighter {
-    constructor(name, weapon, health, position, imgUrl) {
-        this.name = name;
-        this.health = health;
-        this.weapon = weapon;
-        this.position = position
-        this.imgUrl = imgUrl;
-        //this.fightRules = fight(attack,defence,move,replaceWeapon){}; 
+class map {
+    constructor(x,y) {
+        this.cells = new Array;
+        this.x = x;
+        this.y = y;
     }
-}
-const KenPlayer1 = new fighter("Ken",this.fireball, 100, "position", "<img src = '../css/Street-Fighter-Ken.jpg'>");
-const RyuPlayer2 = new fighter("Ryu", this.fireball, 100, "position", "<img src = '../css/Street-Fighter-Ryu.jpg'>");
+    generateCells() {
+        for (let i = 0; i < x; i++) {                
+            for (let j = 0; j < y; j++) {
+              this.cells[x][y] = new Cell();
+            }
+        }
+        
+    };
+    placeFighters() {
 
+       if(randomXY(this.cells).type == normalCell){
+        Ken[randomXY(this.cells)];
 
-// prototype d'armes
-class weapon {
-    constructor(name, power, imgUrl) {
-        this.name = name;
-        this.power = power;
-        this.imgUrl = imgUrl;
+    } 
+       else if(Ken[randomXY(this.cells)] !== this.cells[this.x]){
 
+            Ryu[randomXY(this.cells)];
+       }
+        
+    
+    };
+
+    placeWeapons(number) {
+        for (let i = 0; i < number; i++) {
+            while (randomXY(this.cells).type == normalCell && randomXY(this.cells).type !== fireball && randomXY(this.cells).type !== axe || randomXY(this.cells).type !== sword || randomXY(this.cells).type !== gun ) {
+                fireball[randomXY(this.cells)];     
+                axe[randomXY(this.cells)];     
+                sword[randomXY(this.cells)];  
+                gun[randomXY(this.cells)];  
+            }
+           }
+       };
+    
+    placeObstacleCells(number) {
+        for (let i = 0; i < number; i++) {
+            randomXY(this.cells).type = obstacleCell;
+         while (randomXY(this.cells).type == obstacleCell) {
+         }
+         randomXY(this.cells).type = obstacleCell;
+        }
+    };
+    //this.lightAccessibleCells(){};
+    //this.printOnload(){};
+    randomXY() {
+        let randomX = Math.floor(Math.random()* this.cells.length);
+        let randomY = Math.floor(Math.random()* this.cells[this.x].length);
+        return randomX ,randomY;
     }
+    
 }
-const fireball = new weapon('Fireball', 10, "<img src = '../css/fireball.jpg'>");
-const axe = new weapon('Axe', 30, "<img src = '../css/axe.jpg'>");
-const sword = new weapon('Sword', 20, "<img src = '../css/sword.jpg'>");
-const gun = new weapon('Gun', 40, "<img src = '../css/fireball.jpg'>");
+const mapGenerate = new map(10,10);
 
-class game {
-    constructor(mapGame, currentPlayers){
-        this.mapGame = mapGame;
-        this.currentPlayers = currentPlayers;
-        //this.startGame(){};
-        //this.gameOver(){};
-        //this.nextTurn(){};
+
+
+console.log(mapGenerate)
         //this.displayInfosOfGame(){};
     }
 }
