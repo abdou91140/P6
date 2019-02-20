@@ -5,44 +5,46 @@ class Map {
         this.y = y;
     }
         generateCells () {
-            for (let i = 0; i < this.x; i++) {  
-                       
-             for(let j = 0 ; j<= this.y ; j++) {
-                
-                 this.cells[this.x, this.y] = new Cell(normalCells);
-                 return this.cells[this.x, this.y]
-                     }
+            for (let x = 0; x < this.x; x++) {  
+             for(let y = 0 ; y< this.y ; y++) {
+         this.cells[[x][y]] = new Cell(normalCells,null,null,null);
+
+         console.log(this.cells.length)
+
+             }
             }
             
+
         }
-    
-     placeFighters(Ken,Ryu) {
-       if(this.randomXY(this.cells) !== obstacleCell){
-       Ken = [this.randomXY(this.cells[this.x, this.y])]; 
-       Ryu = [this.randomXY(this.cells[this.x, this.y])]; 
+      
+      placeFighters() {
+       if(this.cells[[this.x],[this.y]] !== obstacleCell){
+       [[this.x][this.y]] = this.randomXY([this.x],[this.y]); 
+       Ryu = this.randomXY([this.x],[this.y]); 
         return Ken , Ryu;
         } 
        else if((Ken[this.x] == Ryu[this.x]) || (Ken[this.y] == Ryu[this.y]) || (Ken[this.x] == Ryu[this.x + 1]) || (Ken[this.y] == Ryu[this.y - 1]) || (Ken[this.y] == Ryu[this.y]) || (Ken[this.y] == Ryu[this.y + 1]) || (Ken[this.y] == Ryu[this.y - 1])) {
 
-           placeFighters(Ken,Ryu)
+      placeFighters()
       
        }
     }
 
-    placeWeapons(fireball,axe,sword,gun) {
-        for (let i = 0; i < 4; i++) {
-            while (this.cells[type] == this.cells[normalCells] && this.cells[this.x, this.y] !== fireball[this.cells[this.x, this.y]] && this.cells[this.x, this.y] !== axe[this.cells[this.x, this.y]] && this.cells[this.x, this.y] !== sword[this.cells[this.x, this.y]] && this.cells[this.x, this.y] !== gun[this.cells[this.x, this.y]] && Ken[this.cells[this.x, this.y]] !== this.cells(placeWeapons(number)) && Ryu[this.cells[this.x, this.y]] !== this.cells(placeWeapons(number))) {
-                fireball = this.randomXY(this.cells[this.x, this.y]);     
-                axe =this.randomXY(this.cells[this.x, this.y]);    
-                sword = this.randomXY(this.cells[this.x, this.y]);
-                gun = this.randomXY(this.cells[this.x, this.y]);  
-                return fireball, axe, sword, gun
+     placeWeapons() { 
+    
+  console.log(fireball);
+            if(this.cells[type] == this.cells[normalCells]){// && this.cells[this.x, this.y] !== this.cells[fireball] && (this.cells[this.x, this.y] !== this.cells[axe]) && this.cells[this.x, this.y] !== sword[this.cells[this.x, this.y]] && this.cells[this.x, this.y] !== gun[this.cells[this.x, this.y]] && Ken[this.cells[this.x, this.y]] !== this.cells[placeWeapons()] && Ryu[this.cells[this.x, this.y]] !== this.cells[placeWeapons()]) {
+                fireball = [this.randomXY(this.cells[this.x, this.y])]; 
+                axe = [this.randomXY(this.cells[this.x, this.y])]; 
+                return fireball,axe ;
+            }else{
+              placeWeapons();
             }
            }
 
-       }
+       
     
-    placeObstacleCells(number) {
+    placeObstacleCells() {
         for (let i = 0; i < number; i++) {
             this.randomXY(this.cells).type = obstacleCell;
          while (this.randomXY(this.cells).type == obstacleCell) {
@@ -53,18 +55,19 @@ class Map {
     }
     //this.lightAccessibleCells(){};
     //this.printOnload(){};
-    randomXY() {
-
-        let randomX = Math.floor(Math.random()* this.x);
-        let randomY = Math.floor(Math.random()* this.cells.length);
-        return (randomX+randomY);
+     randomXY(randomX,randomY) {
+         randomX = Math.floor(Math.random()* random);
+         randomY = Math.floor(Math.random()* random);
+      let arrRandom = [randomX,randomY];
+      console.log(arrRandom)
+       return arrRandom
     }
      
 
 
 }
 var mapGenerate = new Map(10,10);
-console.log(mapGenerate.generateCells());
-console.log(mapGenerate.placeFighters(Ken,Ryu));
-console.log(mapGenerate.placeWeapons(fireball,axe,sword,gun));
-console.log(mapGenerate.randomXY());
+mapGenerate.generateCells();
+console.log(mapGenerate.placeFighters());
+console.log(mapGenerate.placeWeapons());
+mapGenerate.randomXY();
