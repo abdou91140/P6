@@ -33,7 +33,7 @@ class Map {
 
     placeWeapons(numberWeapon) {
         for (let i = 0; i < numberWeapon; i++) {
-            if (this.randomXY(this.cells) == this.cells[normalCells] || this.randomXY(this.cells) !== this.cells[obstacleCell]) {
+            if (this.randomXY() == this.cells[normalCells] || this.randomXY(this.cells) !== this.cells[obstacleCell]) {
                 let fireballPosition = this.randomXY(this.cells);
                 let axePosition = this.randomXY(this.cells);
                 let swordPosition = this.randomXY(this.cells);
@@ -54,18 +54,20 @@ class Map {
 
     placeObstacleCells(numberObstacles) {
         for (let i = 0; i < numberObstacles; i++) {
-            if (this.randomXY(this.cells) !== this.cells[normalCells]);
-            this.cells[i] = this.randomXY(this.cells);
+            let randomCoordonate = randomXY();
+            randomCoordonate.x;
+            randomCoordonate.y;
+            while(obstacleCells == this.cells[randomCoordonate.x][randomCoordonate.y].type);
+            this.cells[randomCoordonate.x][randomCoordonate.y].type(obstaclecells);
         }
 
     }
     //this.lightAccessibleCells(){};
     //this.printOnload(){};
     randomXY() {
-        let randomX = Math.floor(Math.random() * 30);
-        let randomY = Math.floor(Math.random() * 30);
-        let arrRandom = [randomX, randomY];
-        return arrRandom
+        let randomX = Math.floor(Math.random() * this.size-1);
+        let randomY = Math.floor(Math.random() * this.size-1);
+   return {x:randomX, y:randomY}
     }
 
 }
