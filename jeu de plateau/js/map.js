@@ -1,73 +1,78 @@
 class Map {
-    constructor(x,y) {
+    constructor(size) {
         this.cells = [];
-        this.x = x;
-        this.y = y;
+        this.size = size;
+
     }
-        generateCells () {
-            for (let x = 0; x < this.x; x++) {  
-             for(let y = 0 ; y< this.y ; y++) {
-         this.cells[[x][y]] = new Cell(normalCells,null,null,null);
+    generateCells() {
 
-         console.log(this.cells.length)
-
-             }
-            }
+        for (let x = 0; x < this.size; x++) {
+            for (let y = 0; y < this.size; y++) {
+                 this.cells[x][y] = new Cell(normalCells, null, null, null, x, y);
             
+                          console.log(this.cells[x][y])
+            }
+        }
+        
+    }
+
+    placeFighters() {
+        if (this.randomXY(this.cells[type]) !== normalCells) {
+            let KenPosition = this.randomXY(this.cells);
+            let RyuPosition = this.randomXY(this.cells);
+            Ken = KenPosition;
+            Ryu = RyuPosition;
+    
+        }
+        else if (Ken == Ryu || Ken == Ryu + 1 || Ken == Ryu - 1 || Ken + 1 == Ryu || Ken - 1 == Ryu) {
+        
+            placeFighters()
 
         }
-      
-      placeFighters() {
-       if(this.cells[[this.x],[this.y]] !== obstacleCell){
-       [[this.x][this.y]] = this.randomXY([this.x],[this.y]); 
-       Ryu = this.randomXY([this.x],[this.y]); 
-        return Ken , Ryu;
-        } 
-       else if((Ken[this.x] == Ryu[this.x]) || (Ken[this.y] == Ryu[this.y]) || (Ken[this.x] == Ryu[this.x + 1]) || (Ken[this.y] == Ryu[this.y - 1]) || (Ken[this.y] == Ryu[this.y]) || (Ken[this.y] == Ryu[this.y + 1]) || (Ken[this.y] == Ryu[this.y - 1])) {
-
-      placeFighters()
-      
-       }
     }
 
-     placeWeapons() { 
-    
-  console.log(fireball);
-            if(this.cells[type] == this.cells[normalCells]){// && this.cells[this.x, this.y] !== this.cells[fireball] && (this.cells[this.x, this.y] !== this.cells[axe]) && this.cells[this.x, this.y] !== sword[this.cells[this.x, this.y]] && this.cells[this.x, this.y] !== gun[this.cells[this.x, this.y]] && Ken[this.cells[this.x, this.y]] !== this.cells[placeWeapons()] && Ryu[this.cells[this.x, this.y]] !== this.cells[placeWeapons()]) {
-                fireball = [this.randomXY(this.cells[this.x, this.y])]; 
-                axe = [this.randomXY(this.cells[this.x, this.y])]; 
-                return fireball,axe ;
-            }else{
-              placeWeapons();
+    placeWeapons(numberWeapon) {
+        for (let i = 0; i < numberWeapon; i++) {
+            if (this.randomXY(this.cells) == this.cells[normalCells] || this.randomXY(this.cells) !== this.cells[obstacleCell]) {
+                let fireballPosition = this.randomXY(this.cells);
+                let axePosition = this.randomXY(this.cells);
+                let swordPosition = this.randomXY(this.cells);
+                let gunPosition = this.randomXY(this.cells);
+                fireball = fireballPosition;
+                axe = axePosition;
+                sword = swordPosition;
+                gun = gunPosition;
+                console.log(fireball,axe,sword,gun)
             }
-           }
+            else{
+         this.placeWeapons()
+            }
 
-       
-    
-    placeObstacleCells() {
-        for (let i = 0; i < number; i++) {
-            this.randomXY(this.cells).type = obstacleCell;
-         while (this.randomXY(this.cells).type == obstacleCell) {
-         }
-         this.placeObstacleCells();
-        }console.log(this.placeObstacleCells());
+        }
+    }
+
+
+    placeObstacleCells(numberObstacles) {
+        for (let i = 0; i < numberObstacles; i++) {
+            if (this.randomXY(this.cells) !== this.cells[normalCells]);
+            this.cells[i] = this.randomXY(this.cells);
+        }
 
     }
     //this.lightAccessibleCells(){};
     //this.printOnload(){};
-     randomXY(randomX,randomY) {
-         randomX = Math.floor(Math.random()* random);
-         randomY = Math.floor(Math.random()* random);
-      let arrRandom = [randomX,randomY];
-      console.log(arrRandom)
-       return arrRandom
+    randomXY() {
+        let randomX = Math.floor(Math.random() * 30);
+        let randomY = Math.floor(Math.random() * 30);
+        let arrRandom = [randomX, randomY];
+        return arrRandom
     }
-     
-
 
 }
-var mapGenerate = new Map(10,10);
-mapGenerate.generateCells();
-console.log(mapGenerate.placeFighters());
-console.log(mapGenerate.placeWeapons());
-mapGenerate.randomXY();
+
+var mapGenerate = new Map(5);
+    mapGenerate.placeObstacleCells(10);
+    mapGenerate.randomXY();
+    mapGenerate.placeFighters();
+    mapGenerate.generateCells();
+    mapGenerate.placeWeapons(4);
