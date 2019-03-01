@@ -1,4 +1,4 @@
-class fighter {
+class Fighter {
     constructor(name, weapon, health, index, imgUrl) {
         this.name = name;
         this.health = health;
@@ -8,5 +8,5 @@ class fighter {
         //this.fightRules = fight(attack,defence,move,replaceWeapon){}; 
     }
 };
-var Ken =  new fighter("Ken",this.fireball, 100,1, "<img src = '../css/Street-Fighter-Ken.jpg'>");
-var Ryu = new fighter("Ryu", this.fireball, 100,2, "<img src = '../css/Street-Fighter-Ryu.jpg'>"); 
+var Ken =  new Fighter("Ken",this.fireball, 100,1, "<img src = '../css/Street-Fighter-Ken.jpg'>");
+var Ryu = new Fighter("Ryu", this.fireball, 100,2, "<img src = '../css/Street-Fighter-Ryu.jpg'>"); 

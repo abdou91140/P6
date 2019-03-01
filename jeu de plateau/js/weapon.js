@@ -6,9 +6,6 @@ class weapon {
         this.imgUrl = imgUrl;
     }
 }
-const fireball = new weapon('Fireball', 10, "<img src = '../css/fireball.jpg'>");
-const axe = new weapon('Axe', 30, "<img src = '../css/axe.jpg'>");
-const sword = new weapon('Sword', 20, "<img src = '../css/sword.jpg'>");
-const gun = new weapon('Gun', 40, "<img src = '../css/fireball.jpg'>");
+var weaponsArr = [fireball = new weapon('Fireball', 10, "<img src = '../css/fireball.jpg'>"),axe = new weapon('Axe', 30, "<img src = '../css/axe.jpg'>"), sword = new weapon('Sword', 20, "<img src = '../css/sword.jpg'>"),gun = new weapon('Gun', 40, "<img src = '../css/fireball.jpg'>")];
 
 
