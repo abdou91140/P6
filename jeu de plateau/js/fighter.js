@@ -4,9 +4,11 @@ class Fighter {
         this.health = health;
         this.weapon = weapon;
         this.index = index;
-        this.imgUrl = imgUrl;
-        //this.fightRules = fight(attack,defence,move,replaceWeapon){}; 
+        this.imgUrl = imgUrl; 
+     }; 
+     
+        //fight(attack,defence,move,replaceWeapon){
+
     }
 };
-var Ken =  new Fighter("Ken",this.fireball, 100,1, "<img src = '../css/Street-Fighter-Ken.jpg'>");
-var Ryu = new Fighter("Ryu", this.fireball, 100,2, "<img src = '../css/Street-Fighter-Ryu.jpg'>"); 
+var fightersArr = [Ken = new Fighter("Ken",this.weapon, 100,1, "<img src = '../css/Street-Fighter-Ken.jpg'>"), Ryu = new Fighter("Ryu", this.weapon, 100,2, "<img src = '../css/Street-Fighter-Ryu.jpg'>")];
