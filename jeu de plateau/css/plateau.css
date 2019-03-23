@@ -1,29 +1,29 @@
-.flex-container {
+.page{
+background-color: black;
+}
+  
+.banniere{ 
+display: flex;
+justify-content: center;
+}
+.image_banniere{
+    block-size: 250px;
+}
+.ryu_infos {
+height: 50%;
+ 
+}
+.ken_infos {
+height: 50%;
+   
+}
+.row{
+    padding-top: 10px;
+}
+
+#cell{
+    position: relative;
     display: flex;
     flex-wrap: wrap;
-}
-.cell{
-    width: 100px;
-    height: 100px;
-    border: 1px solid;
-}
-.cellBlack{
-    width: 100px;
-    height: 100px;
-    border: 1px solid;
-    background: black;
-}
-.fighter{
-    width: 100px;
-    height: 100px;
-    border: 1px solid;
-    background: red;
-    
-}
-.weapons{
-    width: 100px;
-    height: 100px;
-    border: 1px solid;
-    background: yellow;
-    
+    justify-content: center;
 }
