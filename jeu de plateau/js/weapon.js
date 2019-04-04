@@ -1,11 +1,13 @@
 // prototype d'armes
 class Weapon {
-    constructor(name, power, imgUrl) {
+    constructor(name, power,x,y, img) {
         this.name = name;
         this.power = power;
-        this.imgUrl = imgUrl;
+        this.x = x;
+        this.y = y;
+        this.img = img;
     }
 }
-var weaponsArr = [fireball = new Weapon('Fireball', 10, "<img src = '../css/fireball.gif'>"),axe = new Weapon('Axe', 30, "<img src = '../css/axe.png'>"), sword = new Weapon('Sword', 20, "<img src = '../css/sword.jpg'>"),gun = new Weapon('Gun', 40, "<img src = '../css/gun.png'>")];
+var weaponsArr = [fireball = new Weapon('Fireball', 10,0,0, "../images/fireball.gif"),axe = new Weapon('Axe', 30,0,0, "../images/axe.png"), sword = new Weapon('Sword', 20,0,0, "../images/sword.jpg"),gun = new Weapon('Gun', 40,0,0, "../images/gun.png")];
 
 

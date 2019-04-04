@@ -12,5 +12,3 @@ class Cell {
 }
 let cellTypes = {normal : 1,obstacle : 2};
 
-
-//this.img = {imgCell:"<img src = '../css/white_square.jpg'>", imgObstacle :"<img src = '../css/red_square.jpg'>"} ;

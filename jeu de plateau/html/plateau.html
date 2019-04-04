@@ -8,51 +8,56 @@
     <title>Jeux de plateau P6</title>
   </head>
   
-  <header class="banniere"><img class="image_banniere" src="C:\Users\dax\Desktop\P6\jeu de plateau\css\banniere2.jpg" alt = "banniere"></header>
+  <header class="banniere"><img class="image_banniere" src="../images/banniere2.jpg" alt = "banniere"></header>
   <body class="page">
     <div class="row">
       <div class="col-2 ryu_infos card">
-        <img class="card-img-top"src="../css/Street-Fighter-Ryu.jpg"alt="Card Ryu"/>
+        <img class="card-img-top"src="../images/Street-Fighter-Ryu.jpg"alt="Card Ryu"/>
         <div class="card-header">
           <h4 class="card-title">Ryū</h4>
         </div>
         <div class="card-body">
           <ol class="card-text">
-            <li>health</li>
-            <li>weapon</li>
-            <li>position</li>
+              <li>health : <span id="healthPlayer1"></span></li>
+              <li>weapon : <span id="weaponPlayer1"></span></li>
+              <li>movement : <span id="movementPlayer1"></span></li>
           </ol>
         </div>
-        <div class="card-footer">
+        <div class="card-footer">          
+          <button type="button" class="jouez1 btn-sm btn-dark">JOUEZ</button>
           <button type="button" class="btn-sm btn-warning">ATTACK</button>
           <button type="button" class="btn-sm btn-dark">DEFENCE</button>
         </div>
       </div>
-      <div class="col-8 middle_page">
-          <div id="cell"></div>
+      <div class="col-8 middle_page ">
+          <div id="base">
+
+          </div>
       </div>
       <div class="col-2 ken_infos card">
-        <img class="card-img-top"src="../css/Street-Fighter-Ken.jpg"alt="Card Ken"/>
+        <img class="card-img-top"src="../images/Street-Fighter-Ken.jpg"alt="Card Ken"/>
         <div class="card-header">
           <h4 class="card-title">Ken</h4>
         </div>
         <div class="card-body">
           <ol class="card-text">
-            <li>health</li>
-            <li>weapon</li>
-            <li>position</li>
+            <li>health : <span id="healthPlayer2"></span></li>
+            <li>weapon : <span  id="weaponPlayer2"></span></li>
+            <li>movement : <span id="movementPlayer2"></span></li>
           </ol>
         </div>
         <div class="card-footer">
+          <button type="button" class="jouez2 btn-sm btn-dark">JOUEZ</button>
           <button type="button" class="btn-sm btn-warning">ATTACK</button>
           <button type="button" class="btn-sm btn-dark">DEFENCE</button>
         </div>
       </div>
-    </div>
+      <audio id="intro" src="../sound/02 The World Warrior.mp3"></audio>
+
+      </div>
     <script src="../js/jquery.js"></script>
-    <script src="../js/obstacle.js"></script>
-    <script src="../js/fighter.js"></script>
     <script src="../js/weapon.js"></script>
+    <script src="../js/fighter.js"></script>
     <script src="../js/Cell.js"></script>
     <script src="../js/map.js"></script>
     <script src="../js/game.js"></script>

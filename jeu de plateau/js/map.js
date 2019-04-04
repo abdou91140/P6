@@ -7,8 +7,9 @@ class Map {
         for (let x = 0; x < this.size; x++) {
             this.cells[x] = [];
             for (let y = 0; y < this.size; y++) {
-                this.cells[x][y] = new Cell(cellTypes.normal, null, null, null,(x),(y),null);
-                //console.log(this.cells[x][y])
+                this.cells[x][y] = new Cell(cellTypes.normal, null, null, null,x,y,"../images/white_square.jpg");
+               // this.cells.push(x)
+                //console.log(this.cells[x])
             }
         }
     }
@@ -26,16 +27,15 @@ class Map {
     }
     placeFighters(fightersArr) {
         fightersArr.forEach(fighter => {
-
             while (true) {
-                let randomXYCell = this.randomXY();
+                let randomXYCell = this.randomXY();    
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
-                if (cell.type === cellTypes.normal && cell.fighter === null &&  cell.fighter !== cell.fighter +1 && cell.fighter !== cell.fighter-1 && cell.fighter !== cell.fighter + 1 && cell.fighter !== cell.fighter - 1) {
+                fighter.x= this.cells[randomXYCell.x][randomXYCell.y].x;
+                fighter.y = this.cells[randomXYCell.x][randomXYCell.y].y;
+                if (cell.type === cellTypes.normal && cell.fighter === null && cell.x <= this.size-1 && cell.x >= 0  && cell.x !== (cell.x +1) && cell.x !== (cell.x -1)&& cell.y !== (cell.y +1) && cell.y !== (cell.y -1)) {
                     this.cells[randomXYCell.x][randomXYCell.y].fighter = fighter;
-                    fighter.x = this.cells[randomXYCell.x][randomXYCell.y].x 
-                    fighter.y= this.cells[randomXYCell.x][randomXYCell.y].y;
+                 
 
-                  //  console.log(this.cells[randomXYCell.x][randomXYCell.y].position)
                     break
                 }
             }
@@ -48,6 +48,8 @@ class Map {
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
                 if (cell.type === cellTypes.normal && cell.weapon === null) { 
                     this.cells[randomXYCell.x][randomXYCell.y].weapon = weapon;
+                    weapon.x = this.cells[randomXYCell.x][randomXYCell.y].x;
+                    weapon.y= this.cells[randomXYCell.x][randomXYCell.y].y;
                     break
                 }
             }
@@ -62,69 +64,39 @@ class Map {
         return {x: randomX,y: randomY}
     }
     lightAccessibleCells(){
-   
+};
+printOnload() {
+    for (let x = 0; x < this.size; x++) {
+        var rowCell = $("<div class='column'></div>").attr("id", cellInRowX)
+        for (let y = 0; y < this.size; y++) {
+            var cellInRow = this.cells[x][y];
+            var cellInRowX = this.cells[x][y].x.valueOf();
+            var cellInRowY = this.cells[x][y].y.valueOf();
+            rowCell.append(function () {
+                let caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
+                let imgObstacle = "<img src='../images/red_square.jpg' alt='Obstacle'></img>";
 
-   
-    };
-    printOnload() {
-        
-        this.cells.forEach(row => {
-         
-            row.forEach(cellInRow => {
-                if (cellInRow.type === cellTypes.normal) { 
-                   let divCell = $(document.createElement("div"))
-                    let imgCell =document.createElement("img");
-                    divCell.attr("id", cellInRow.x +"-"+ cellInRow.y);
-                    imgCell.src= "../css/white_square.jpg";
-                    divCell.prepend(imgCell);
-                    $("#cell").append(divCell)
-                
-                } 
                 if (cellInRow.type === cellTypes.obstacle) {
-                    let divObstacle = $(document.createElement("div"))
-                    let imgObstacle =document.createElement("img");
-                    imgObstacle.src = "../css/red_square.jpg";
-                     divObstacle.append(imgObstacle);
-                    $("#cell").append(divObstacle)
+                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + imgObstacle + "</div>";
                 }
-                if (cellInRow.type === cellTypes.normal && cellInRow.weapon === fireball) {
-                    let divWeapon1 = document.createElement("div");
-                     divWeapon1.innerHTML = fireball.imgUrl;
-                    $("#cell").append(divWeapon1)
+                if (cellInRow.weapon instanceof Weapon) {
+                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.weapon.img + ">" + "</div>";
                 }
-                if (cellInRow.type === cellTypes.normal && cellInRow.weapon === gun) {
-                    let divWeapon2 = document.createElement("div");
-                    divWeapon2.innerHTML = gun.imgUrl;
-                    $("#cell").append(divWeapon2)
+                if (cellInRow.fighter instanceof Fighter) {
+                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src="+ "../images/" + cellInRow.fighter.img + ">" + "</div>";
                 }
-                if (cellInRow.type === cellTypes.normal && cellInRow.weapon === sword) {
-                    let divWeapon3 = document.createElement("div");
-                    divWeapon3.innerHTML = sword.imgUrl;
-                    $("#cell").append(divWeapon3)
-                }
-                if (cellInRow.type === cellTypes.normal && cellInRow.weapon === axe) {
-                    let divWeapon4 = document.createElement("div");
-                    divWeapon4.innerHTML = axe.imgUrl;
-                    $("#cell").append(divWeapon4)
-                }
-                if (cellInRow.type === cellTypes.normal && cellInRow.fighter instanceof Fighter) {
-                    let divFighter1 = $(document.createElement("div"));
-                     let imgFighter =document.createElement("img");
-                     imgFighter.src = "../css/" + cellInRow.fighter.img;
-                    divFighter1.append(imgFighter);
-                    $("#cell").append(divFighter1)
-                }
-               
-            });
+                return caseContent
 
-        });
+            })
+            $("#base").append(rowCell)
+
+        }
     }
-
-    };
-
-var mapGenerate = new Map(8);
+};
+}
+var mapGenerate = new Map(9);
 mapGenerate.generateCells();
-mapGenerate.placeObstacleCells(8);
+mapGenerate.placeObstacleCells(9);
 mapGenerate.placeFighters(fightersArr);
 mapGenerate.placeWeapons(weaponsArr);
 mapGenerate.randomXY();
