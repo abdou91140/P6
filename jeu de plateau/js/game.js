@@ -7,6 +7,7 @@ class Game {
 //this.gameOver(){};
 
    displayInfoPlayer() {
+    
      $("#healthPlayer1").text(this.players[0].health)
      $("#healthPlayer2").text(this.players[1].health)
      $("#weaponPlayer1").text(this.players[0].weapon.name)
@@ -16,6 +17,10 @@ class Game {
    }
   
 startGame() { 
+  $(".jouez").click(function () {
+    console.log("hello joueur1")
+    gameGenerate.choosePlayer()
+  });
 
   $(document).keydown(function (e) {
     if (e.which == 38) {
@@ -33,24 +38,11 @@ startGame() {
     
   });
   }
+  // choix du joueur this.currentPlayer aléatoirement.
 choosePlayer(){
-  $(".jouez1").click(function () {
-    console.log("hello joueur1")
-    gameGenerate.currentPlayer = gameGenerate.players[1]
-
-  })
-    $(".jouez2").click(function () {
-   gameGenerate.currentPlayer = gameGenerate.players[0]
-      console.log("hello joueur2")
-    })
-    if (this.currentPlayer === this.players[1]) {
-      this.currentPlayer = this.players[0];
-    } else {
-      this.currentPlayer = this.players[1]
+      this.currentPlayer = this.players[Math.floor(Math.random()* this.players.length)];
+      $(".jouez").fadeToggle(700);
     }
-  
-return
-}
 
 
     move(direction) {
@@ -176,7 +168,6 @@ return
   }
 var gameGenerate = new Game(mapGenerate, fightersArr);
 gameGenerate.displayInfoPlayer()
-gameGenerate.choosePlayer()
 gameGenerate.startGame()
 
 

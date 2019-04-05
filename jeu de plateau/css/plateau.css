@@ -1,8 +1,27 @@
 .page{
-     
 background-color: black;
 text-align: center;
+z-index: 10;
+position: relative;
+height: 100%;
+width: 100%;
 }
+.jouez {
+    z-index: 100;
+    position: absolute;
+    margin-top: 12.6%;
+    height: 100px;
+    width: 100px;
+    background-color: rgb(39, 35, 35);
+    border: none;
+    font-size: 28px;
+    color: #FFFFFF;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
   
 .banniere{ 
 display: flex;
