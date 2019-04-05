@@ -27,14 +27,14 @@ width: 100%;
 display: flex;
 justify-content: center;
 }
-.image_banniere{
+.image-banniere{
     block-size: 250px !important;
 }
-.ryu_infos {
+.ryu-infos {
 height: 50%;
  
 }
-.ken_infos {
+.ken-infos {
 height: 50%;
    
 }

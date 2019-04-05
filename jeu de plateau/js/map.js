@@ -32,6 +32,7 @@ class Map {
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
                 fighter.x= this.cells[randomXYCell.x][randomXYCell.y].x;
                 fighter.y = this.cells[randomXYCell.x][randomXYCell.y].y;
+                
                 if (cell.type === cellTypes.normal && cell.fighter === null && cell.x <= this.size-1 && cell.x >= 0  && cell.x !== (cell.x +1) && cell.x !== (cell.x -1)&& cell.y !== (cell.y +1) && cell.y !== (cell.y -1)) {
                     this.cells[randomXYCell.x][randomXYCell.y].fighter = fighter;
                  
