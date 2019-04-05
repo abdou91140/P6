@@ -18,32 +18,39 @@ class Game {
   
 startGame() { 
   $(".jouez").click(function () {
-    console.log("hello joueur1")
     gameGenerate.choosePlayer()
   });
 
   $(document).keydown(function (e) {
     if (e.which == 38) {
-      gameGenerate.move("up")
+      this.move("up")
     }
     if (e.which == 40) {
-      gameGenerate.move("down")
+      this.move("down")
     }
     if (e.which == 39) {
-      gameGenerate.move("right")
+      this.move("right")
     }
     if (e.which == 37) {
-      gameGenerate.move("left")
+      this.move("left")
     }
     
   });
   }
   // choix du joueur this.currentPlayer aléatoirement.
-choosePlayer(){
+    choosePlayer(){
       this.currentPlayer = this.players[Math.floor(Math.random()* this.players.length)];
       $(".jouez").fadeToggle(700);
-    }
+      console.log("hello"+ " "+this.currentPlayer.name )
 
+    }
+    nextToPlay(){
+      if (this.currentPlayer === this.players[1]) {
+        this.currentPlayer = this.players[0];
+      } else {
+        this.currentPlayer = this.players[1]
+      }
+    }
 
     move(direction) {
 
@@ -139,14 +146,9 @@ choosePlayer(){
         this.displayInfoPlayer()
         }
         else { //prochain tour du joueur suivant
-          //échange du joueurs qui dois joueur . 
-          if (this.currentPlayer === this.players[1]) {
-            this.currentPlayer = this.players[0];
-          } else {
-            this.currentPlayer = this.players[1]
-          }
-           this.currentPlayer.movementCount = 3;
-           this.displayInfoPlayer() // remise à 3 des mouvement des joueurs.
+        this.currentPlayer.movementCount = 3;// remise à 3 des mouvement des joueurs.
+        this.nextToPlay()
+        this.displayInfoPlayer() 
         }
         }
     fight(){
