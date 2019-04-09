@@ -32,12 +32,13 @@ class Map {
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
                 fighter.x= this.cells[randomXYCell.x][randomXYCell.y].x;
                 fighter.y = this.cells[randomXYCell.x][randomXYCell.y].y;
-                
-                if (cell.type === cellTypes.normal && cell.fighter === null && cell.x <= this.size-1 && cell.x >= 0  && cell.x !== (cell.x +1) && cell.x !== (cell.x -1)&& cell.y !== (cell.y +1) && cell.y !== (cell.y -1)) {
+               
+                if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x >= 0  && fighter.x !== cell.x+1 && fighter.x !== cell.x-1 && fighter.y !== cell.y+1 && fighter.y !== cell.y-1) {
                     this.cells[randomXYCell.x][randomXYCell.y].fighter = fighter;
-                 
-
+                   // console.log(fighter)
                     break
+                }else{
+                    alert("Refreche the page")
                 }
             }
         }); // console.log(this.cells)
@@ -47,7 +48,7 @@ class Map {
             while (true) {
                 let randomXYCell = this.randomXY();
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
-                if (cell.type === cellTypes.normal && cell.weapon === null) { 
+                if (cell.type === cellTypes.normal && cell.weapon === null && cell.fighter === null) { 
                     this.cells[randomXYCell.x][randomXYCell.y].weapon = weapon;
                     weapon.x = this.cells[randomXYCell.x][randomXYCell.y].x;
                     weapon.y= this.cells[randomXYCell.x][randomXYCell.y].y;
