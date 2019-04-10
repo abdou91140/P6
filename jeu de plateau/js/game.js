@@ -8,7 +8,6 @@ class Game {
 
 
   displayInfoPlayer() {
-   
     $("#healthPlayer1").text(this.players[0].health)
     $("#healthPlayer2").text(this.players[1].health)
     $("#weaponPlayer1").text(this.players[0].weapon.name)
@@ -51,12 +50,12 @@ class Game {
     if (this.currentPlayer.move === true) {
       if (this.currentPlayer === this.players[1]) {
         this.currentPlayer = this.players[0];
-        $(".ryu-infos").css("background-color", "#39e400")
-        $(".ken-infos").css("background-color", "white")
+       /* $(".ryu-infos").css("background-color", "#39e400")
+        $(".ken-infos").css("background-color", "white")*/
       } else {
         this.currentPlayer = this.players[1]
-        $(".ken-infos").css("background-color", "#39e400")
-        $(".ryu-infos").css("background-color", "white")
+      /*  $(".ken-infos").css("background-color", "#39e400")
+        $(".ryu-infos").css("background-color", "white")*/
       }
     }
     if (this.currentPlayer.fight === true) {
@@ -134,7 +133,7 @@ class Game {
         }
 
         if ( this.mapGame.cells[newCoordonate.x][newCoordonate.y].type === cellTypes.normal && this.mapGame.cells[oldCoordonate.x][oldCoordonate.y] === this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y]) {
-          console.log("hello" + " " + this.currentPlayer.name + " " + "let's fight !")
+          console.log(this.currentPlayer.name + ", " + "let's fight !")
           document.getElementById("fight-start").play();
           this.currentPlayer.move = false;
           this.currentPlayer.fight = true;
@@ -170,45 +169,83 @@ class Game {
       this.nextToPlay() // remise à 3 des mouvement des joueurs.
      
     }
-
   }
+  lightAccessibleCells() {
+
+   }
 
   fight() {
-    
     if (this.currentPlayer === this.players[0]) {
       $(".attack-player-1").click(function () {
         gameGenerate.attack()
-        gameGenerate.displayInfoPlayer()
-        
+      })
+      $(".defence-player-1").click(function () {
+        gameGenerate.defence()
       })
     }
+
     if (this.currentPlayer === this.players[1]) {
       $(".attack-player-2").click(function () {
         gameGenerate.attack()
-        gameGenerate.displayInfoPlayer()
+      })
+      $(".defence-player-2").click(function () {
+        gameGenerate.defence()
       })
     }
- this.nextToPlay()
-
-    }
+  }
 
   attack() {
+    this.soundEffect(this.currentPlayer.weapon.name)
     this.opposentPlayer.health = this.opposentPlayer.health - this.currentPlayer.weapon.power;
+    this.displayInfoPlayer()
+    this.nextToPlay()
     this.gameOver()
-
     }
   
-  defence() {}
-
-    gameOver(){ 
+  defence() {
+  }
+    
+    gameOver(){      
     if (this.opposentPlayer.health <= 0) {
-      alert("Your dead" + " " + this.opposentPlayer.name)
-      location.reload();
-    }
+      document.getElementById("game-over").play()
+      if (this.opposentPlayer === this.players[1]) {
+        var endGame = "<img src=' ../images/ken-lose-image.jpg'>";
+      } else {
+         endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
+    } 
+     $(".middle-page").html(endGame)
   }
 }
+  soundEffect(weaponName){ 
+    switch (weaponName) {
+      case "Fireball":
+        document.getElementById("hadouken").play()
+        break;
+        case "Punch":
+        document.getElementById("punch-sound").play()
+        break;
+        case "Gun":
+        document.getElementById("gun-sound").play()
+        break;
+        case "Axe":
+        document.getElementById("axe-sound").play()
+        break;
+        case "Sword":
+        document.getElementById("sword-sound").play()
+        break;
+      default:
+        break;
+    }
+  }
+  /*window.onload = function() {
+document.getElementById("intro").play();
+}*/
+}
 var gameGenerate = new Game(mapGenerate, fightersArr);
+gameGenerate.displayInfoPlayer()
 gameGenerate.startGame()
+gameGenerate.gameOver()
+
 //systeme de tour pour les attack jusqu'a 0 santé
 //while sur les santé de players.
 //création de statut mouvement, { fight:, movement: }
@@ -219,7 +256,3 @@ gameGenerate.startGame()
 //gameGenerate.resetPrint();
 
 
-
-/*window.onload = function() {
-document.getElementById("intro").play();
-}*/

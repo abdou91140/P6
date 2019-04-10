@@ -7,8 +7,8 @@ class Map {
         for (let x = 0; x < this.size; x++) {
             this.cells[x] = [];
             for (let y = 0; y < this.size; y++) {
-                this.cells[x][y] = new Cell(cellTypes.normal, null, null, null,x,y,"../images/white_square.jpg");
-               // this.cells.push(x)
+                this.cells[x][y] = new Cell(cellTypes.normal, null, null, null, x, y, "../images/white_square.jpg");
+                // this.cells.push(x)
                 //console.log(this.cells[x])
             }
         }
@@ -28,16 +28,16 @@ class Map {
     placeFighters(fightersArr) {
         fightersArr.forEach(fighter => {
             while (true) {
-                let randomXYCell = this.randomXY();    
+                let randomXYCell = this.randomXY();
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
-                fighter.x= this.cells[randomXYCell.x][randomXYCell.y].x;
+                fighter.x = this.cells[randomXYCell.x][randomXYCell.y].x;
                 fighter.y = this.cells[randomXYCell.x][randomXYCell.y].y;
-               
-                if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x >= 0  && fighter.x !== cell.x+1 && fighter.x !== cell.x-1 && fighter.y !== cell.y+1 && fighter.y !== cell.y-1) {
+
+                if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x >= 0 && fighter.x !== cell.x + 1 && fighter.x !== cell.x - 1 && fighter.y !== cell.y + 1 && fighter.y !== cell.y - 1) {
                     this.cells[randomXYCell.x][randomXYCell.y].fighter = fighter;
-                   // console.log(fighter)
+                    // console.log(fighter)
                     break
-                }else{
+                } else {
                     location.reload()
                 }
             }
@@ -48,10 +48,10 @@ class Map {
             while (true) {
                 let randomXYCell = this.randomXY();
                 let cell = this.cells[randomXYCell.x][randomXYCell.y];
-                if (cell.type === cellTypes.normal && cell.weapon === null && cell.fighter === null) { 
+                if (cell.type === cellTypes.normal && cell.weapon === null && cell.fighter === null) {
                     this.cells[randomXYCell.x][randomXYCell.y].weapon = weapon;
                     weapon.x = this.cells[randomXYCell.x][randomXYCell.y].x;
-                    weapon.y= this.cells[randomXYCell.x][randomXYCell.y].y;
+                    weapon.y = this.cells[randomXYCell.x][randomXYCell.y].y;
                     break
                 }
             }
@@ -63,38 +63,40 @@ class Map {
     randomXY() {
         let randomX = Math.floor(Math.random() * this.size);
         let randomY = Math.floor(Math.random() * this.size);
-        return {x: randomX,y: randomY}
-    }
-    lightAccessibleCells(){
-};
-printOnload() {
-    for (let x = 0; x < this.size; x++) {
-        var rowCell = $("<div class='column'></div>").attr("id", cellInRowX)
-        for (let y = 0; y < this.size; y++) {
-            var cellInRow = this.cells[x][y];
-            var cellInRowX = this.cells[x][y].x.valueOf();
-            var cellInRowY = this.cells[x][y].y.valueOf();
-            rowCell.append(function () {
-                let caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
-                let imgObstacle = "<img src='../images/red_square.jpg' alt='Obstacle'></img>";
-
-                if (cellInRow.type === cellTypes.obstacle) {
-                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + imgObstacle + "</div>";
-                }
-                if (cellInRow.weapon instanceof Weapon) {
-                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.weapon.img + ">" + "</div>";
-                }
-                if (cellInRow.fighter instanceof Fighter) {
-                    caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src="+ "../images/" + cellInRow.fighter.img + ">" + "</div>";
-                }
-                return caseContent
-
-            })
-            $("#base").append(rowCell)
-
+        return {
+            x: randomX,
+            y: randomY
         }
     }
-};
+   
+    printOnload() {
+        for (let x = 0; x < this.size; x++) {
+            var rowCell = $("<div class='column'></div>").attr("id", cellInRowX)
+            for (let y = 0; y < this.size; y++) {
+                var cellInRow = this.cells[x][y];
+                var cellInRowX = this.cells[x][y].x.valueOf();
+                var cellInRowY = this.cells[x][y].y.valueOf();
+                rowCell.append(function () {
+                    let caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
+                    let imgObstacle = "<img src='../images/red_square.jpg' alt='Obstacle'></img>";
+
+                    if (cellInRow.type === cellTypes.obstacle) {
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + imgObstacle + "</div>";
+                    }
+                    if (cellInRow.weapon instanceof Weapon) {
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "../images/" + cellInRow.weapon.img + ">" + "</div>";
+                    }
+                    if (cellInRow.fighter instanceof Fighter) {
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "../images/" + cellInRow.fighter.img + ">" + "</div>";
+                    }
+                    return caseContent
+
+                })
+                $("#base").append(rowCell)
+
+            }
+        }
+    };
 }
 var mapGenerate = new Map(9);
 mapGenerate.generateCells();
@@ -102,7 +104,4 @@ mapGenerate.placeObstacleCells(9);
 mapGenerate.placeFighters(fightersArr);
 mapGenerate.placeWeapons(weaponsArr);
 mapGenerate.randomXY();
-mapGenerate.lightAccessibleCells()
 mapGenerate.printOnload();
- 
-
