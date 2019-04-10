@@ -42,36 +42,34 @@ class Game {
   // choix du joueur this.currentPlayer aléatoirement.
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
+    this.currentPlayer.move = true
     $(".jouez").fadeToggle(700);
     console.log("hello" + " " + this.currentPlayer.name)
   }
 
   nextToPlay() {
-    if (this.currentPlayer.status === true)
+    if (this.currentPlayer.move === true) {
       if (this.currentPlayer === this.players[1]) {
         this.currentPlayer = this.players[0];
-        $(".ryu-infos").css("background-color","#39e400")
-        $(".ken-infos").css("background-color","white")
+        $(".ryu-infos").css("background-color", "#39e400")
+        $(".ken-infos").css("background-color", "white")
       } else {
         this.currentPlayer = this.players[1]
-        $(".ken-infos").css("background-color","#39e400")
-        $(".ryu-infos").css("background-color","white")
-
+        $(".ken-infos").css("background-color", "#39e400")
+        $(".ryu-infos").css("background-color", "white")
       }
-    else {
+    }
+    if (this.currentPlayer.fight === true) {
       if (this.currentPlayer === this.players[1]) {
         this.opposentPlayer = this.players[0]
-
       } else {
         this.opposentPlayer = this.players[1]
       }
     }
-  
-
   }
 
   move(direction) {
-    if (this.currentPlayer.status = true && this.currentPlayer.movementCount > 0) {
+    if (this.currentPlayer.move === true  && this.currentPlayer.movementCount > 0) {
       // échange du joueur qui éffectue peut se déplacer
         
 
@@ -119,7 +117,6 @@ class Game {
         // création d'une let destinations avec les coordonnée récupérer dans le choix des switch
         let destinations = this.mapGame.cells[newCoordonate.x][newCoordonate.y];
         //condition d'avoir la céllules vide , sans fighter.
-
         if (destinations.type === cellTypes.normal && destinations.fighter === null) {
           //transfères des données vers les coordonnées de la cellules sur laquelle on souhaite aller.
           this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
@@ -139,9 +136,9 @@ class Game {
         if ( this.mapGame.cells[newCoordonate.x][newCoordonate.y].type === cellTypes.normal && this.mapGame.cells[oldCoordonate.x][oldCoordonate.y] === this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y]) {
           console.log("hello" + " " + this.currentPlayer.name + " " + "let's fight !")
           document.getElementById("fight-start").play();
-          this.currentPlayer.status =false;
+          this.currentPlayer.move = false;
+          this.currentPlayer.fight = true;
           this.fight()
-          this.nextToPlay()
         }
       } else {
         
@@ -168,7 +165,7 @@ class Game {
       //prochain tour du joueur suivant
       //échange du joueurs qui dois joueur . 
 
-    } if(this.currentPlayer.movementCount === 0){
+    } if(this.currentPlayer.movementCount === 0 && this.currentPlayer.move === true){
       this.currentPlayer.movementCount=3;
       this.nextToPlay() // remise à 3 des mouvement des joueurs.
      
@@ -177,40 +174,38 @@ class Game {
   }
 
   fight() {
-    let i = 0;
-    while (100 > i) {
-      if(this.currentPlayer === this.players[0]){
+    
+    if (this.currentPlayer === this.players[0]) {
       $(".attack-player-1").click(function () {
         gameGenerate.attack()
-        gameGenerate.displayInfoPlayer()          
+        gameGenerate.displayInfoPlayer()
+        
       })
-    }if(this.currentPlayer === this.players[1]){
+    }
+    if (this.currentPlayer === this.players[1]) {
       $(".attack-player-2").click(function () {
         gameGenerate.attack()
-        gameGenerate.displayInfoPlayer()  
-    })
-  } 
-  i++
-    this.gameOver()   
-    this.nextToPlay()    
-      //console.log("hello your dead" + " " + this.currentPlayer.name)
+        gameGenerate.displayInfoPlayer()
+      })
     }
+ this.nextToPlay()
 
-  }
-
+    }
 
   attack() {
     this.opposentPlayer.health = this.opposentPlayer.health - this.currentPlayer.weapon.power;
-  }
+    this.gameOver()
+
+    }
+  
   defence() {}
 
-  gameOver() {
-if(this.currentPlayer.health === 0){
-  alert("You loose !!!")
-}
-return
-  };
-
+    gameOver(){ 
+    if (this.opposentPlayer.health <= 0) {
+      alert("Your dead" + " " + this.opposentPlayer.name)
+      location.reload();
+    }
+  }
 }
 var gameGenerate = new Game(mapGenerate, fightersArr);
 gameGenerate.startGame()

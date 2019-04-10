@@ -38,7 +38,7 @@ class Map {
                    // console.log(fighter)
                     break
                 }else{
-                    alert("Refreche the page")
+                    location.reload()
                 }
             }
         }); // console.log(this.cells)
