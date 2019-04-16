@@ -6,11 +6,9 @@ class Fighter {
         this.x = x;
         this.y = y;
         this.img = img; 
-        this.movementCount = 3;
-        this.fight = true;
         this.move = true;
-       // this.attack = attack;
-        //this.defence = defence;
+        this.attack = true;
+        this.defence = true;
      };
      
 

@@ -1,3 +1,10 @@
+@font-face {
+    font-family: ARCADE;
+    src: url(../css/ARCADE.TTF);
+  }
+  
+ 
+  
 .page{
 background-color: black;
 text-align: center;
@@ -5,6 +12,15 @@ z-index: 10;
 position: relative;
 height: 100%;
 width: 100%;
+font-family: ARCADE;
+font-size: 28px;
+ 
+}
+span{
+    color: red;
+}
+h4{
+    font-size: 48px !important;
 }
 .jouez {
     z-index: 100;
@@ -14,7 +30,6 @@ width: 100%;
     width: 100px;
     background-color: rgb(39, 35, 35);
     border: none;
-    font-size: 28px;
     color: #FFFFFF;
     text-align: center;
     overflow: hidden;
@@ -37,6 +52,13 @@ height: 50%;
 .ken-infos {
 height: 50%;
    
+}
+.card-body{
+    padding: 0px !important;
+}
+ol{
+    margin-left: -7px;
+
 }
 .row{
     display:flex;
