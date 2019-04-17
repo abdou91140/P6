@@ -4,6 +4,7 @@ class Game {
     this.players = players;
     this.currentPlayer;
     this.opposentPlayer;
+    this.litCells;
   }
  
 
@@ -15,23 +16,21 @@ class Game {
   // choix du joueur this.currentPlayer aléatoirement.
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
+  
     $(".jouez").fadeToggle(700);
     console.log(this.currentPlayer.name);
     this.lightingCells()
   }
   lightingCells() {
-    for (var i = 0; i < 4; i++) {
-      let right = this.currentPlayer.x + i;
-      let left = this.currentPlayer.x - i;
-      let down = this.currentPlayer.y + i;
-      let up = this.currentPlayer.y - i;
-      $(`#${right}-${this.currentPlayer.y}`).css("background", "yellow");
-      $(`#${left}-${this.currentPlayer.y}`).css("background", "yellow");
-      $(`#${this.currentPlayer.x}-${down}`).css("background", "yellow");
-      $(`#${this.currentPlayer.x}-${up}`).css("background", "yellow");
-      this.movementOfPlayer(i);
-    }     
+      for (let i = 1; i < 4 ; i++ ) { 
+           $(`#${this.currentPlayer.x + i}-${this.currentPlayer.y}`).css("background", "yellow")
+              $(`#${this.currentPlayer.x}-${this.currentPlayer.y + i}`).css("background", "yellow")
+              $(`#${this.currentPlayer.x - i}-${this.currentPlayer.y}`).css("background", "yellow")
+              $(`#${this.currentPlayer.x}-${this.currentPlayer.y - i}`).css("background", "yellow")
+              this.movementOfPlayer(i)
+    }
   }
+       
   initLightingCells(){
     for (var i = 0; i < 4; i++) {
     $(`#${this.currentPlayer.x + i}-${this.currentPlayer.y}`).css("background", "black");
@@ -46,8 +45,10 @@ class Game {
     imgCellOrigine.src = "../images/" + this.mapGame.board[this.currentPlayer.x][this.currentPlayer.y].img;
 
   }*/
-  
+ 
   movementOfPlayer(i) {
+    
+   
     $(`#${this.currentPlayer.x+i}-${this.currentPlayer.y}`).one("click", function (e) {
       gameGenerate.movementOfDataPlayer("right", i);
     });
@@ -60,8 +61,8 @@ class Game {
     $(`#${this.currentPlayer.x}-${this.currentPlayer.y - i}`).click(function (e) {
       gameGenerate.movementOfDataPlayer("up", i);
     });
-  
   }
+  
 
   movementOfDataPlayer(direction,i) {
     var oldPosition = {
@@ -124,7 +125,7 @@ class Game {
       }
     }
   
-    let cellOrigine = $(`#${oldPosition.x}-${oldPosition.y}`);
+    let cellOrigine = $(`#${oldPosition.x}-${oldPosition.y}`).html("");
     let imgCellOrigine = document.createElement("img"); 
     if (this.mapGame.board[this.currentPlayer.x][this.currentPlayer.y].weapon instanceof Weapon) {
       imgCellOrigine.src = "../images/" + this.mapGame.board[this.currentPlayer.x][this.currentPlayer.y].weapon.img;
@@ -132,14 +133,12 @@ class Game {
       imgCellOrigine.src = "../images/" + this.mapGame.board[this.currentPlayer.x][this.currentPlayer.y].img;
     }
     cellOrigine.html(imgCellOrigine);
-    
     let cellDestination = $(`#${newPosition.x}-${newPosition.y}`);
     let imgCellDestination = document.createElement("img");
     imgCellDestination.src = "../images/" + this.currentPlayer.img;
     cellDestination.html(imgCellDestination);
     console.log("coordonate :"+ this.currentPlayer.x +" "+this.currentPlayer.y)
     this.nextTurn()
-    cellDestination = "";
   }
 
   nextTurn() {
@@ -153,6 +152,7 @@ class Game {
     this.lightingCells()
       /* $(".ryu-infos").css("background-color", "#39e400")
        $(".ken-infos").css("background-color", "white")*/
+       
   }
 
   fight() {
