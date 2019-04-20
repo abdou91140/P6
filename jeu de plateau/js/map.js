@@ -29,12 +29,11 @@ class Map {
             while (true) {
                 let randomNumberFor = this.randomNumberForXY();
                 let cell = this.board[randomNumberFor.x][randomNumberFor.y];
-                fighter.x = this.board[randomNumberFor.x][randomNumberFor.y].x;
-                fighter.y = this.board[randomNumberFor.x][randomNumberFor.y].y;
-
+                
                 if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x >= 0 && fighter.x !== cell.x + 1 && fighter.x !== cell.x - 1 && fighter.y !== cell.y + 1 && fighter.y !== cell.y - 1) {
                     this.board[randomNumberFor.x][randomNumberFor.y].fighter = fighter;
-                    // console.log(fighter)
+                    fighter.x = this.board[randomNumberFor.x][randomNumberFor.y].x;
+                    fighter.y = this.board[randomNumberFor.x][randomNumberFor.y].y;
                     break
                 } else {
                     location.reload()
@@ -76,7 +75,7 @@ randomNumberForXY() {
                 var cellInRowX = this.board[x][y].x.valueOf();
                 var cellInRowY = this.board[x][y].y.valueOf();
                 rowCell.append(function () {
-                    let cellContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
+                    let cellContent = "<div  id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
                     let imgObstacle = "<img src='../images/red_square.jpg' alt='Obstacle'></img>";
 
                     if (cellInRow.type === cellTypes.obstacle) {
@@ -92,7 +91,6 @@ randomNumberForXY() {
 
                 })
                 $("#base").append(rowCell)
-
             }
         }
     };

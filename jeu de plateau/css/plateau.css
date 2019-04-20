@@ -67,6 +67,7 @@ ol{
        
 
 #base{
+
     justify-content: center;
     display: grid;
     grid-auto-flow: column;
@@ -74,5 +75,4 @@ ol{
 img{
     justify-content: center;
     margin: 2px;
-    
 }
