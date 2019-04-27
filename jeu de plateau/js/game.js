@@ -2,10 +2,9 @@ class Game {
   constructor(mapGame, players) {
     this.mapGame = mapGame;
     this.players = players;
-    this.currentPlayer = null;
+    this.currentPlayer;
 
   }
-
 
   displayInfoPlayer() {
     $("#healthPlayer1").text(this.players[0].health)
@@ -14,12 +13,14 @@ class Game {
     $("#weaponPlayer2").text(this.players[1].weapon.name)
     $("#movementPlayer1").text(this.players[0].movementCount)
     $("#movementPlayer2").text(this.players[1].movementCount)
+    $("#powerWeapon1").text(this.players[0].weapon.power)
+    $("#powerWeapon2").text(this.players[1].weapon.power)
+
   }
 
   startGame() {
     $(".jouez").click(function () {
       gameGenerate.choosePlayer()
-
     });
 
     $(document).keydown(function (e) {
@@ -34,44 +35,37 @@ class Game {
       }
       if (e.which == 37) {
         gameGenerate.move("left")
-    }
+      }
     });
   }
-  
+
   // choix du joueur this.currentPlayer aléatoirement.
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
-    this.currentPlayer.move = true
     $(".jouez").fadeToggle(700);
-    console.log("hello" + " " + this.currentPlayer.name)
+    this.lightAccessibleCells()
   }
 
   nextToPlay() {
-    if (this.currentPlayer.move === true) {
-      if (this.currentPlayer === this.players[1]) {
-        this.currentPlayer = this.players[0];
-       /* $(".ryu-infos").css("background-color", "#39e400")
-        $(".ken-infos").css("background-color", "white")*/
-      } else {
-        this.currentPlayer = this.players[1]
-      /*  $(".ken-infos").css("background-color", "#39e400")
-        $(".ryu-infos").css("background-color", "white")*/
-      }
+    if (this.currentPlayer === this.players[1]) {
+      this.currentPlayer = this.players[0];
+      this.opposentPlayer = this.players[1]
+      $(".ryu-infos").css("background-color", "yellow")
+      $(".ken-infos").css("background-color", "white")
+    } else {
+      this.currentPlayer = this.players[1]
+      this.opposentPlayer = this.players[0]
+      $(".ken-infos").css("background-color", "yellow")
+      $(".ryu-infos").css("background-color", "white")
     }
-    if (this.currentPlayer.fight === true) {
-      if (this.currentPlayer === this.players[1]) {
-        this.opposentPlayer = this.players[0]
-      } else {
-        this.opposentPlayer = this.players[1]
-      }
-    }
+    this.lightAccessibleCells()
   }
 
-  move(direction) {
-    if (this.currentPlayer.move === true  && this.currentPlayer.movementCount > 0) {
-      // échange du joueur qui éffectue peut se déplacer
-        
 
+
+  move(direction) {
+    if (this.currentPlayer.move === true && this.currentPlayer.movementCount > 0) {
+      // échange du joueur qui éffectue peut se déplacer
       // simplification du mouvement avec l'affectation du x et y par l'objet newCoordonate
       let oldCoordonate = {
         x: this.currentPlayer.x,
@@ -112,7 +106,7 @@ class Game {
           break;
       }
       // condition qui évite de faire un mouvement sortant de la map
-      if (newCoordonate.x <= this.mapGame.size - 1 && newCoordonate.x >= 0 && newCoordonate.y <= this.mapGame.size - 1 && newCoordonate.y >= 0) {
+      if (newCoordonate.x < this.mapGame.size && newCoordonate.x >= 0 && newCoordonate.y < this.mapGame.size && newCoordonate.y >= 0) {
         // création d'une let destinations avec les coordonnée récupérer dans le choix des switch
         let destinations = this.mapGame.cells[newCoordonate.x][newCoordonate.y];
         //condition d'avoir la céllules vide , sans fighter.
@@ -123,114 +117,149 @@ class Game {
           //mise à jour des coordonnée du x et y du joueur que l'ont déplace.
           this.currentPlayer.x = newCoordonate.x;
           this.currentPlayer.y = newCoordonate.y;
+          this.swapWeaponByPassing(newCoordonate)
+          this.updateImgOnBoard(oldCoordonate)
+          this.detectingTheFighter()
         }
-
-        // échange de d'arme sur la case de destination.
-        if (destinations.weapon instanceof Weapon) {
-          var weaponExchange = this.mapGame.cells[newCoordonate.x][newCoordonate.y].weapon;
-          this.mapGame.cells[newCoordonate.x][newCoordonate.y].weapon = this.currentPlayer.weapon;
-          this.currentPlayer.weapon = weaponExchange;
-        }
-
-        if ( this.mapGame.cells[newCoordonate.x][newCoordonate.y].type === cellTypes.normal && this.mapGame.cells[oldCoordonate.x][oldCoordonate.y] === this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y]) {
-          console.log(this.currentPlayer.name + ", " + "let's fight !")
-          document.getElementById("fight-start").play();
-          this.currentPlayer.move = false;
-          this.currentPlayer.fight = true;
-          this.fight()
-        }
-      } else {
-        
-      }
-
-      let cellOrigine = $(`#${oldCoordonate.x}-${oldCoordonate.y}`).html("");
-      let imgCellOrigine = document.createElement("img");
-
-      if (this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].weapon instanceof Weapon) {
-        imgCellOrigine.src = "../images/" + this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].weapon.img;
-      } else {
-        imgCellOrigine.src = "../images/" + this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].img;
-      }
-      cellOrigine.html(imgCellOrigine);
-      //accès à la cellule du fighter avec une notation template litérale.
-      let cellDestination = $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`);
-      let imgCellDestination = document.createElement("img");
-      imgCellDestination.src = "../images/" + this.currentPlayer.img;
-      cellDestination.html(imgCellDestination);
-
-      // à chaque déplacement du joueur le movementCount est décrémenté
-      this.currentPlayer.movementCount--
-      this.displayInfoPlayer()
-      //prochain tour du joueur suivant
-      //échange du joueurs qui dois joueur . 
-
-    } if(this.currentPlayer.movementCount === 0 && this.currentPlayer.move === true){
-      this.currentPlayer.movementCount=3;
-      this.nextToPlay() // remise à 3 des mouvement des joueurs.
-     
+      } else {}
     }
   }
+  swapWeaponByPassing(newCoordonate) {
+    // échange de d'arme sur la case de destination.
+
+    if (this.mapGame.cells[newCoordonate.x][newCoordonate.y].weapon instanceof Weapon) {
+      var weaponExchange = this.mapGame.cells[newCoordonate.x][newCoordonate.y].weapon;
+      this.mapGame.cells[newCoordonate.x][newCoordonate.y].weapon = this.currentPlayer.weapon;
+      this.currentPlayer.weapon = weaponExchange;
+    }
+  }
+  detectingTheFighter() {
+    if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y + 1].fighter || this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y - 1].fighter || this.mapGame.cells[this.currentPlayer.x + 1][this.currentPlayer.y].fighter || this.mapGame.cells[this.currentPlayer.x - 1][this.currentPlayer.y].fighter !== null) {
+      console.log(this.currentPlayer.name + ", " + "let's fight !")
+      document.getElementById("fight-start").play();
+      $("#base").toggle(function () {
+        $(".attack").css("display", "inline")
+        $(".defence").css("display", "inline")
+      })
+
+      this.currentPlayer.move = false;
+      this.fight()
+      this.nextToPlay()
+      return
+    }
+  }
+
+
+  updateImgOnBoard(oldCoordonate) {
+    let cellOrigine = $(`#${oldCoordonate.x}-${oldCoordonate.y}`).html("");
+    let imgCellOrigine = document.createElement("img");
+
+    if (this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].weapon instanceof Weapon) {
+      imgCellOrigine.src = "../images/" + this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].weapon.img;
+    } else {
+      imgCellOrigine.src = "../images/" + this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].img;
+    }
+    cellOrigine.html(imgCellOrigine);
+    //accès à la cellule du fighter avec une notation template litérale.
+    let cellDestination = $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`);
+    let imgCellDestination = document.createElement("img");
+    imgCellDestination.src = "../images/" + this.currentPlayer.img;
+    cellDestination.html(imgCellDestination);
+
+    this.unsetlightAccessibleCells()
+    this.currentPlayer.movementCount--
+    this.displayInfoPlayer()
+    this.lightAccessibleCells()
+    if (this.currentPlayer.movementCount === 0 && this.currentPlayer.move === true) {
+      this.currentPlayer.movementCount = 3;
+      this.unsetlightAccessibleCells()
+      this.nextToPlay()
+    }
+  }
+
+
   lightAccessibleCells() {
 
-   }
+    for (let x = -1; x < this.mapGame.size - 1; x++) {
+      for (let y = -1; y < this.mapGame.size - 1; y++) {
+        if (this.mapGame.cells[this.currentPlayer.x + 1][this.currentPlayer.y].type === 1) {
+          $(`#${this.currentPlayer.x+1}-${this.currentPlayer.y}`).css("background", "yellow").addClass("authorized")
+        }
+        if (this.mapGame.cells[this.currentPlayer.x - 1][this.currentPlayer.y].type === 1) {
+          $(`#${this.currentPlayer.x-1}-${this.currentPlayer.y}`).css("background", "yellow").addClass("authorized")
+
+        }
+        if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y + 1].type === 1) {
+          $(`#${this.currentPlayer.x}-${this.currentPlayer.y+1}`).css("background", "yellow").addClass("authorized")
+        }
+        if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y - 1].type === 1) {
+          $(`#${this.currentPlayer.x}-${this.currentPlayer.y-1}`).css("background", "yellow").addClass("authorized")
+        }
+      }
+    }
+  }
+
+  unsetlightAccessibleCells() {
+    for (let x = 0; x < this.mapGame.size; x++) {
+      for (let y = 0; y < this.mapGame.size; y++) {
+        $(`#${x}-${y}`).css("background", "black").removeClass("authorized")
+      }
+    }
+  }
 
   fight() {
-    if (this.currentPlayer === this.players[0]) {
-      $(".attack-player-1").click(function () {
-        gameGenerate.attack()
-      })
-      $(".defence-player-1").click(function () {
-        gameGenerate.defence()
-      })
-    }
 
-    if (this.currentPlayer === this.players[1]) {
-      $(".attack-player-2").click(function () {
-        gameGenerate.attack()
-      })
-      $(".defence-player-2").click(function () {
-        gameGenerate.defence()
-      })
-    }
+    $(".attack").click(function () {
+      gameGenerate.attack()
+    })
+    $(".defence").click(function () {
+      gameGenerate.defence()
+    })
   }
 
   attack() {
     this.soundEffect(this.currentPlayer.weapon.name)
-    this.opposentPlayer.health = this.opposentPlayer.health - this.currentPlayer.weapon.power;
+    if (this.currentPlayer.defence === true) {
+      this.opposentPlayer.health = this.opposentPlayer.health - (this.currentPlayer.weapon.power * 0.5);
+    } else {
+      this.opposentPlayer.health = this.opposentPlayer.health - this.currentPlayer.weapon.power;
+    }
     this.displayInfoPlayer()
     this.nextToPlay()
     this.gameOver()
-    }
-  
-  defence() {
   }
-    
-    gameOver(){      
+
+  defence() {
+    this.currentPlayer.defence = true;
+    this.nextToPlay()
+  }
+
+  gameOver() {
     if (this.opposentPlayer.health <= 0) {
       document.getElementById("game-over").play()
       if (this.opposentPlayer === this.players[1]) {
         var endGame = "<img src=' ../images/ken-lose-image.jpg'>";
       } else {
-         endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
-    } 
-     $(".middle-page").html(endGame)
+        endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
+      }
+      $(".middle-page").html(endGame)
+    }
   }
-}
-  soundEffect(weaponName){ 
+  soundEffect(weaponName) {
     switch (weaponName) {
       case "Fireball":
         document.getElementById("hadouken").play()
         break;
-        case "Punch":
+      case "Punch":
         document.getElementById("punch-sound").play()
         break;
-        case "Gun":
+      case "Gun":
         document.getElementById("gun-sound").play()
         break;
-        case "Axe":
+      case "Axe":
         document.getElementById("axe-sound").play()
         break;
-        case "Sword":
+      case "Sword":
         document.getElementById("sword-sound").play()
         break;
       default:
@@ -245,14 +274,4 @@ var gameGenerate = new Game(mapGenerate, fightersArr);
 gameGenerate.displayInfoPlayer()
 gameGenerate.startGame()
 gameGenerate.gameOver()
-
-//systeme de tour pour les attack jusqu'a 0 santé
-//while sur les santé de players.
-//création de statut mouvement, { fight:, movement: }
-//création id à voir.
-//faire une fonction pour savoir si il ya fight
-//deux fonction attack et defence.
-
-//gameGenerate.resetPrint();
-
 

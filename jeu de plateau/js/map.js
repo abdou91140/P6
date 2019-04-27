@@ -33,7 +33,7 @@ class Map {
                 fighter.x = this.cells[randomXYCell.x][randomXYCell.y].x;
                 fighter.y = this.cells[randomXYCell.x][randomXYCell.y].y;
 
-                if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x >= 0 && fighter.x !== cell.x + 1 && fighter.x !== cell.x - 1 && fighter.y !== cell.y + 1 && fighter.y !== cell.y - 1) {
+                if (cell.type === cellTypes.normal && cell.fighter === null && fighter.x !== cell.x + 1 || fighter.x !== cell.x - 1 || fighter.y !== cell.y + 1 || fighter.y !== cell.y - 1) {
                     this.cells[randomXYCell.x][randomXYCell.y].fighter = fighter;
                     // console.log(fighter)
                     break
