@@ -1,14 +1,16 @@
+// prototype de joueur
 class Fighter {
-    constructor(name, weapon, health, index, imgUrl) {
+    constructor(name, health, weapon, x, y, img) {
         this.name = name;
         this.health = health;
         this.weapon = weapon;
-        this.index = index;
-        this.imgUrl = imgUrl; 
-     }; 
-     
-        //fight(attack,defence,move,replaceWeapon){
-
-    }
+        this.x = x;
+        this.y = y;
+        this.img = img;
+        this.movementCount = 3;
+        this.defence = false;
+        this.move = true;
+    };
 };
-var fightersArr = [Ken = new Fighter("Ken",this.weapon, 100,1, "<img src = '../css/Street-Fighter-Ken.jpg'>"), Ryu = new Fighter("Ryu", this.weapon, 100,2, "<img src = '../css/Street-Fighter-Ryu.jpg'>")];
+
+var fightersArr = [Ryu = new Fighter("Ryu", 100, fireball, 0, 0, "Street-Fighter-Ryu.jpg"), Ken = new Fighter("Ken", 100, fireball, 0, 0, "Street-Fighter-Ken.jpg")];
