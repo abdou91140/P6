@@ -62,30 +62,30 @@ class Game {
       $(".ryu-infos").css("background-color", "white");
     }
   }
- /* checkIfCellsExist(x, y) {        
+  checkIfCellsExist(x, y) {        
     //if (this.mapGame.cells[x]<= this.mapGame.boardSize+1 || this.mapGame.cells[x]>= 0 || this.mapGame.cells[y]<= this.mapGame.boardSize+1 || this.mapGame.cells[y]>= 0) {
-    if(x&&y <= this.mapGame.boardSize+1 )  { 
+    if(this.mapGame.cells[x][y] <= this.mapGame.boardSize+1 )  { 
     return true;
     }
     return false;
-  }*/
+  }
   checkIfCellsNormal(x, y) {
    
     if (this.mapGame.cells[x][y].type === cellTypes.normal) {
       return true;
     }
     return false;
-  }
+  } 
   checkIfCellContainFighter(x, y) {
      
-        if (this.mapGame.cells[x][y].hasOwnProperty("fighter")) {
+        if (this.mapGame.cells[x][y]) {
           console.log(this.mapGame.cells[x][y]);
           
           return true
         }else{
           return false
         }
-     
+      
     }
   checkIfSuroundingCellsContainFighter(x, y) {
     if (
