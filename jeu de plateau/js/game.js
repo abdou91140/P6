@@ -78,7 +78,7 @@ class Game {
   }
   checkIfCellContainFighter(x, y) {
      
-        if (this.mapGame.cells[x][y].fighter.hasOwnProperty("name") === "ken" || "ryu") {
+        if (this.mapGame.cells[x][y].hasOwnProperty("fighter")) {
           console.log(this.mapGame.cells[x][y]);
           
           return true
