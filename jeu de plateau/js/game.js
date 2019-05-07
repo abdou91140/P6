@@ -8,9 +8,10 @@ class Game {
   // méthode du début du jeux avec un bouton avec un effet de fondu en jquery.
   startGame() {
     let game = this;
-    $(".jouez").click(function (){
+    $(".jouez").click(function () {
       $(this).fadeToggle(700);
       game.choosePlayer();
+      game.lightAccessibleCells()
     });
   }
   // méthode des touches du clavier pour le mouvements des joueurs.
@@ -34,7 +35,7 @@ class Game {
   // choix du joueur aléatoirement qui débute this.currentPlayer.
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
-    this.lightAccessibleCells(); // placer la fonction juste après choosePlayer.
+    // placer la fonction juste après choosePlayer.
   }
   // tour par tour avec changement de couleurs de l'arrière plan de celui qui joue.
   nextToPlay() {
@@ -62,48 +63,40 @@ class Game {
       $(".ryu-infos").css("background-color", "white");
     }
   }
-  checkIfCellsExist(x, y) {        
-    //if (this.mapGame.cells[x]<= this.mapGame.boardSize+1 || this.mapGame.cells[x]>= 0 || this.mapGame.cells[y]<= this.mapGame.boardSize+1 || this.mapGame.cells[y]>= 0) {
-    if(this.mapGame.cells[x][y] <= this.mapGame.boardSize+1 )  { 
-    return true;
-    }
-    return false;
+checkIfCellHasobstacle(x,y) {
+  if (this.mapGame.cells[x][y].obstacle instanceof Obstacle) {
+    return false
   }
-  checkIfCellsNormal(x, y) {
-   
-    if (this.mapGame.cells[x][y].type === cellTypes.normal) {
-      return true;
-    }
-    return false;
-  } 
-  checkIfCellContainFighter(x, y) {
-     
-        if (this.mapGame.cells[x][y]) {
-          console.log(this.mapGame.cells[x][y]);
-          
-          return true
-        }else{
-          return false
-        }
-      
-    }
-  checkIfSuroundingCellsContainFighter(x, y) {
-    if (
-      this.checkIfCellContainFighter(x + 1, y) || this.checkIfCellContainFighter(x - 1, y) ||
-      this.checkIfCellContainFighter(x, y + 1) || this.checkIfCellContainFighter(x, y - 1)
-    ) {
-      //this.mapGame.cells[x-1][y].fighter ||this.mapGame.cells[x][y-1].fighter || this.mapGame.cells[x+1][y].fighter ||this.mapGame.cells[x][y+1].fighter !== null){  
-      this.fight();
-      this.currentPlayer.move = false;
-    } else {
-      return false;
-    }
-  }
+  return true
+}
   checkIfCellHasWeapon(x, y) {
     if (this.mapGame.cells[x][y].weapon instanceof Weapon) {
       this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
     }
     return false;
+  }
+checkIfCellHasFighter(x, y) {
+  if (this.currentPlayer === this.players[0]) {
+    if (this.mapGame.cells[x][y].fighter === this.players[1]) {
+      return true
+    } else {
+      return false
+    }
+  } else {
+    if (this.mapGame.cells[x][y].fighter === this.players[0]) {
+      // if(Object.getOwnPropertyDescriptor(this.mapGame.cells[x], 'fighter') === false  ){ 
+      return true
+    } else {
+      return false
+    }
+  }
+}
+
+  checkIfCellContainFighter(x, y) {
+ 
+if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this.checkIfCellHasFighter(x,y+1)|| this.checkIfCellHasFighter(x,y-1)){  
+  this.fight()
+   } 
   }
   calculateNewCoordonate(direction) {
 
@@ -145,37 +138,36 @@ class Game {
   }
   // méthode de mouvement qui transmet les données du joueur qui doit se déplacer vers la céllule de destination.
   move(direction) {
-    console.log(this.currentPlayer);
-
     if (
       this.currentPlayer.move === true &&
       this.currentPlayer.movementCount > 0
     ) {
+      let newCoordonate = this.calculateNewCoordonate(direction)
       let oldCoordonate = {
         x: this.currentPlayer.x,
         y: this.currentPlayer.y
       };
-      let newCoordonate = this.calculateNewCoordonate(direction)
+      this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;
       // condition qui évite de faire un mouvement sortant de la map.
-     /* if (this.checkIfCellsExist(newCoordonate.x, newCoordonate.y) &&
-        this.checkIfCellsNormal(newCoordonate.x, newCoordonate.y)
-        
-      ) {
-        console.log(this.currentPlayer);
-        */
-        //transfères des données vers les coordonnées de la cellules sur laquelle on souhaite aller.
-        this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
-        this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;
-        this.currentPlayer.x = newCoordonate.x;
-        this.currentPlayer.y = newCoordonate.y;
-        console.log(this.currentPlayer);
+      /* if (this.checkIfCellsExist(newCoordonate.x, newCoordonate.y) &&
+         this.checkIfCellsNormal(newCoordonate.x, newCoordonate.y)
 
-        this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
-        this.checkIfSuroundingCellsContainFighter(this.currentPlayer.x, this.currentPlayer.y)
+       ) {*/
+      //transfères des données vers les coordonnées de la cellules sur laquelle on souhaite aller.
+      if(this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)){
+      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
+      console.log(this.mapGame.cells[newCoordonate.x][newCoordonate.y]);
+      console.log(this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter);
+     
+      this.currentPlayer.x = newCoordonate.x;
+      this.currentPlayer.y = newCoordonate.y;
+      this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)
+      this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
+      }
       
+
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
       this.unsetlightAccessibleCells(); // faire méthod qui gère le décompte et le lit name nextMovement.
-      this.lightAccessibleCells();
       this.currentPlayer.movementCount--;
     }
     if (
@@ -230,25 +222,25 @@ class Game {
   }
 
   // méthode d'allumage des céllules de déplacement.
-  lightAccessibleCells() {
+  lightAccessibleCells(x, y) {
     //créer fonction qui rassemble toute les vérification des cells dispo et l'appeler dans mov() et litAccesiblecell().
-    $(`#${this.currentPlayer.x + 1}-${this.currentPlayer.y}`)
+    $(`#${x + 1}-${y}`)
+      .css("background", "yellow")
+    // .addClass("authorized");
+    $(`#${x}-${y}`)
+      .css("background", "yellow")
+    // .addClass("authorized");
+    $(`#${x}-${y}`)
       .css("background", "yellow")
       .addClass("authorized");
-    $(`#${this.currentPlayer.x - 1}-${this.currentPlayer.y}`)
+    $(`#${x}-${y}`)
       .css("background", "yellow")
-      .addClass("authorized");
-    $(`#${this.currentPlayer.x}-${this.currentPlayer.y + 1}`)
-      .css("background", "yellow")
-      .addClass("authorized");
-    $(`#${this.currentPlayer.x}-${this.currentPlayer.y - 1}`)
-      .css("background", "yellow")
-      .addClass("authorized");
+    //  .addClass("authorized");
   }
   // méthode d'initialiation de l'arrière plan en noir pour éteindre les céllules allumé en jaune.
   unsetlightAccessibleCells() {
-    for (let x = 0; x < this.mapGame.boardSize; x++) {
-      for (let y = 0; y < this.mapGame.boardSize; y++) {
+    for (let x = 0; x < this.mapGame.boardSize + 1; x++) {
+      for (let y = 0; y < this.mapGame.boardSize + 1; y++) {
         $(`#${x}-${y}`)
           .css("background", "black")
           .removeClass("authorized");

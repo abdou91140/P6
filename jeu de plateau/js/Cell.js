@@ -1,6 +1,6 @@
 class Cell {
-    constructor(type, weapon, fighter, lightCell, x, y, img) {
-        this.type = type;
+    constructor(obstacle, weapon, fighter, lightCell, x, y, img) {
+        this.obstacle = obstacle;
         this.weapon = weapon;
         this.fighter = fighter;
         this.lightCell = lightCell;
@@ -9,7 +9,3 @@ class Cell {
         this.img = img;
     }
 }
-let cellTypes = {
-    normal: 1,
-    obstacle: 2
-};
