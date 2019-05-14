@@ -1,3 +1,4 @@
+
 // Objet du déroulement du jeux , avec les fonctions pour le mouvements des joueurs , fonctions d'affichage , fonctions de combat, et d'effets sonore.
 class Game {
   constructor(mapGame, players) {
@@ -63,6 +64,16 @@ class Game {
       $(".ryu-infos").css("background-color", "white");
     }
   }
+checkIfCellExist(x,y){
+  if(this.mapGame.cells[x][y].x <= this.mapGame.boardSize && this.mapGame.cells[x][y].y <= this.mapGame.boardSize && (this.mapGame.cells[x][y].x&&this.mapGame.cells[x][y].y)>= 0 ){
+    console.log(this.mapGame.cells[x][y].x)
+
+    return true
+  }
+  else false
+console.log(this.mapGame.cells[x][y].x)
+}
+
 checkIfCellHasobstacle(x,y) {
   if (this.mapGame.cells[x][y].obstacle instanceof Obstacle) {
     return false
@@ -75,23 +86,14 @@ checkIfCellHasobstacle(x,y) {
     }
     return false;
   }
-checkIfCellHasFighter(x, y) {
-  if (this.currentPlayer === this.players[0]) {
-    if (this.mapGame.cells[x][y].fighter === this.players[1]) {
+  checkIfCellHasFighter(x, y) {
+if(this.mapGame.cells[x][y].fighter!==null){       
       return true
-    } else {
+    }else{
       return false
     }
-  } else {
-    if (this.mapGame.cells[x][y].fighter === this.players[0]) {
-      // if(Object.getOwnPropertyDescriptor(this.mapGame.cells[x], 'fighter') === false  ){ 
-      return true
-    } else {
-      return false
-    }
-  }
+ 
 }
-
   checkIfCellContainFighter(x, y) {
  
 if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this.checkIfCellHasFighter(x,y+1)|| this.checkIfCellHasFighter(x,y-1)){  
@@ -154,11 +156,8 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
 
        ) {*/
       //transfères des données vers les coordonnées de la cellules sur laquelle on souhaite aller.
-      if(this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)){
-      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
-      console.log(this.mapGame.cells[newCoordonate.x][newCoordonate.y]);
-      console.log(this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter);
-     
+      if(this.checkIfCellExist(newCoordonate.x, newCoordonate.y) && this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y) ){
+      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;     
       this.currentPlayer.x = newCoordonate.x;
       this.currentPlayer.y = newCoordonate.y;
       this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)

@@ -35,11 +35,14 @@ class Map {
             while (true) {
                 let randomNumberXYCell = this.randomNumberXY();
                 let cell = this.cells[randomNumberXYCell.x][randomNumberXYCell.y];
+                fighter.x = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].x;
+                fighter.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
+               // if(this.cells[randomNumberXYCell.x]<= this.boardSize && this.cells[randomNumberXYCell.y]<= this.boardSize && this.cells[randomNumberXYCell.x]>=0 && this.cells[randomNumberXYCell.y].y>= 0 ){
                 if (cell.obstacle === null && cell.fighter === null) {
-                    fighter.x = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].x;
-                    fighter.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
-                    this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
-                    break
+                    if( cell.x+1 && cell.x-1 !== fighter.x || cell.y+1 && cell.y-1 !== fighter.y){ 
+                        this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
+                        break
+                    }
                 } else {
                     location.reload()
                 }
