@@ -65,13 +65,12 @@ class Game {
     }
   }
 checkIfCellExist(x,y){
-  if(this.mapGame.cells[x][y].x <= this.mapGame.boardSize && this.mapGame.cells[x][y].y <= this.mapGame.boardSize && (this.mapGame.cells[x][y].x&&this.mapGame.cells[x][y].y)>= 0 ){
-    console.log(this.mapGame.cells[x][y].x)
-
-    return true
+  if(x in this.mapGame.cells)  { 
+    if(y in this.mapGame.cells[x]) {
+      return true;
+    }
   }
   else false
-console.log(this.mapGame.cells[x][y].x)
 }
 
 checkIfCellHasobstacle(x,y) {
@@ -145,29 +144,26 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
       this.currentPlayer.movementCount > 0
     ) {
       let newCoordonate = this.calculateNewCoordonate(direction)
+      if(this.checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
       let oldCoordonate = {
         x: this.currentPlayer.x,
         y: this.currentPlayer.y
       };
-      this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;
-      // condition qui évite de faire un mouvement sortant de la map.
-      /* if (this.checkIfCellsExist(newCoordonate.x, newCoordonate.y) &&
-         this.checkIfCellsNormal(newCoordonate.x, newCoordonate.y)
-
-       ) {*/
-      //transfères des données vers les coordonnées de la cellules sur laquelle on souhaite aller.
-      if(this.checkIfCellExist(newCoordonate.x, newCoordonate.y) && this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y) ){
-      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;     
+      if (this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
+      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
+      this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;     
       this.currentPlayer.x = newCoordonate.x;
       this.currentPlayer.y = newCoordonate.y;
+
       this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)
       this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
-      }
-      
-
+    
+   
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
       this.unsetlightAccessibleCells(); // faire méthod qui gère le décompte et le lit name nextMovement.
       this.currentPlayer.movementCount--;
+    }
+  }
     }
     if (
       this.currentPlayer.movementCount === 0 &&
