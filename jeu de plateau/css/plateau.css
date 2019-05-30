@@ -89,11 +89,11 @@ ol {
 
 }
 
-#base {
+#map-game {
     justify-content: center;
     display: grid;
     grid-auto-flow: column;
-position: relative;
+    position: relative;
 }
 
 img {

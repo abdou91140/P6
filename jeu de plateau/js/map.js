@@ -95,7 +95,7 @@ class Map {
                     }
                     return caseContent
                 })
-                $("#base").append(rowCell)
+                $("#map-game").append(rowCell)
             }
         }
     };

@@ -12,7 +12,6 @@ class Game {
     $(".jouez").click(function () {
       $(this).fadeToggle(700);
       game.choosePlayer();
-      game.lightAccessibleCells()
     });
   }
   // méthode des touches du clavier pour le mouvements des joueurs.
@@ -44,7 +43,8 @@ class Game {
     this.unsetlightAccessibleCells();
     this.togglePlayer();
     this.showWhoPlaying(this.currentPlayer);
-    this.lightAccessibleCells();
+    this.lightAccessibleCells()
+
   }
   togglePlayer() {
     if (this.currentPlayer === this.players[1]) {
@@ -99,42 +99,48 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
   this.fight()
    } 
   }
+  newCoordonateOfplayer(){
+  let newCoordonate= { x: this.currentPlayer.x,
+  y: this.currentPlayer.y }
+  return newCoordonate
+  }
+  oldCoordonateOfPlayer(){
+    let oldCoordonate = {
+      x: this.currentPlayer.x,
+      y: this.currentPlayer.y
+    };
+    return oldCoordonate
+  }
   calculateNewCoordonate(direction) {
-    let newCoordonate;
+  let newCoordonate = this.newCoordonateOfplayer()  
     switch (direction) {
       case "right":
-        newCoordonate = {
-          x: this.currentPlayer.x + 1,
-          y: this.currentPlayer.y
-        };
-
+        newCoordonate.x = newCoordonate.x+1;
         break;
       case "left":
-        newCoordonate = {
-          x: this.currentPlayer.x - 1,
-          y: this.currentPlayer.y
-        };
+        newCoordonate.x= newCoordonate.x-1;
         break;
       case "down":
-        newCoordonate = {
-          x: this.currentPlayer.x,
-          y: this.currentPlayer.y + 1
-        };
+        newCoordonate.y= newCoordonate.y + 1;
         break;
       case "up":
-        newCoordonate = {
-          x: this.currentPlayer.x,
-          y: this.currentPlayer.y - 1
-        };
+        newCoordonate.y = newCoordonate.y - 1;
         break;
       default:
-        newCoordonate = {
-          x: this.currentPlayer.x,
-          y: this.currentPlayer.y
-        };
+        newCoordonate 
         break;
     }
     return newCoordonate
+  }
+  transferObjetCurrentPlayer(newCoordonate){
+    this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
+  }
+  initOldCoordonate(oldCoordonate){
+    this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;     
+  }
+  updateCoordonate(newCoordonate){
+    this.currentPlayer.x = newCoordonate.x;
+    this.currentPlayer.y = newCoordonate.y;
   }
   // méthode de mouvement qui transmet les données du joueur qui doit se déplacer vers la céllule de destination.
   move(direction) {
@@ -143,21 +149,14 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
       this.currentPlayer.movementCount > 0
     ) {
       let newCoordonate = this.calculateNewCoordonate(direction)
+      let oldCoordonate = this.oldCoordonateOfPlayer()
       if(this.checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
-      let oldCoordonate = {
-        x: this.currentPlayer.x,
-        y: this.currentPlayer.y
-      };
       if (this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
-      this.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = this.currentPlayer;
-      this.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;     
-      this.currentPlayer.x = newCoordonate.x;
-      this.currentPlayer.y = newCoordonate.y;
-
+      this.transferObjetCurrentPlayer(newCoordonate)
+      this.initOldCoordonate(oldCoordonate)
+      this.updateCoordonate(newCoordonate)
       this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)
       this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
-    
-   
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
       this.unsetlightAccessibleCells(); // faire méthod qui gère le décompte et le lit name nextMovement.
       this.currentPlayer.movementCount--;
@@ -177,7 +176,6 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
     var weaponExchange = this.mapGame.cells[x][y].weapon;
     this.mapGame.cells[x][y].weapon = this.currentPlayer.weapon;
     this.currentPlayer.weapon = weaponExchange;
-
     this.displayInfoPlayer();
   }
   // méthode de détection du joueur adverse sur une céllule voisine de celle de destination, et lancement du combat. Avec disparition du tableau et  apparition des boutons pour combatre
@@ -221,13 +219,13 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
     $(`#${x + 1}-${y}`)
       .css("background", "yellow")
     // .addClass("authorized");
-    $(`#${x}-${y}`)
+    $(`#${x-1}-${y}`)
       .css("background", "yellow")
     // .addClass("authorized");
-    $(`#${x}-${y}`)
+    $(`#${x}-${y+1}`)
       .css("background", "yellow")
       .addClass("authorized");
-    $(`#${x}-${y}`)
+    $(`#${x}-${y-1}`)
       .css("background", "yellow")
     //  .addClass("authorized");
   }
