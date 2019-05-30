@@ -86,7 +86,7 @@ checkIfCellHasobstacle(x,y) {
     return false;
   }
   checkIfCellHasFighter(x, y) {
-if(this.mapGame.cells[x][y].fighter!==null){       
+if(this.checkIfCellExist(x,y) && this.mapGame.cells[x][y].fighter!==null){       
       return true
     }else{
       return false
@@ -94,7 +94,6 @@ if(this.mapGame.cells[x][y].fighter!==null){
  
 }
   checkIfCellContainFighter(x, y) {
- 
 if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this.checkIfCellHasFighter(x,y+1)|| this.checkIfCellHasFighter(x,y-1)){  
   this.fight()
    } 
