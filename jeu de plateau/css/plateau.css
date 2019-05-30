@@ -2,17 +2,14 @@
     font-family: ARCADE;
     src: url(../css/ARCADE.TTF);
 }
-
+/*@media only screen and (min-width: 768px) {*/
+    /* tablettes et ordinateurs */
 .page {
     background-color: black;
-    text-align: center;
     z-index: 10;
-    position: relative;
-    height: 100%;
-    width: 100%;
     font-family: ARCADE;
     font-size: 28px;
-
+display: grid;
 }
 
 span {
@@ -26,9 +23,10 @@ h4 {
 .jouez {
     z-index: 100;
     position: absolute;
-    margin-top: 12.6%;
+    margin:14.9em;
     height: 100px;
-    width: 100px;
+    width: 101px;
+    padding-left: 1px;
     background-color: rgb(39, 35, 35);
     border: none;
     color: #FFFFFF;
@@ -60,13 +58,11 @@ h4 {
     transform: translateY(4px);
 }
 
-.banniere {
-    display: flex;
-    justify-content: center;
-}
-
 .image-banniere {
-    block-size: 250px !important;
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+     block-size: 250px !important;
 }
 
 .ryu-infos {
@@ -86,11 +82,10 @@ ol {
 
 }
 
-.row {
-    display: flex;
-    justify-content: center;
+.game-display{
+    display: -webkit-inline-flex;
+    justify-content: space-around;
     margin: 10px !important;
-    padding: auto !important;
 
 }
 
@@ -98,10 +93,17 @@ ol {
     justify-content: center;
     display: grid;
     grid-auto-flow: column;
-
+position: relative;
 }
 
 img {
     justify-content: center;
     margin: 2px;
 }
+ 
+    @media only screen and (max-width: 767px) {
+    /* smartphone */
+
+    }
+    @media only screen and (max-width: 767px) and (orientation: portrait) {
+    /* smartphone en mode portait */}

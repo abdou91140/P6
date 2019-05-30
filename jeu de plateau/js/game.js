@@ -36,6 +36,7 @@ class Game {
   // choix du joueur aléatoirement qui débute this.currentPlayer.
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
+    this.showWhoPlaying(this.currentPlayer);
     // placer la fonction juste après choosePlayer.
   }
   // tour par tour avec changement de couleurs de l'arrière plan de celui qui joue.
@@ -99,7 +100,6 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
    } 
   }
   calculateNewCoordonate(direction) {
-
     let newCoordonate;
     switch (direction) {
       case "right":

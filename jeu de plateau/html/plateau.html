@@ -10,13 +10,13 @@
     <meta charset="UTF-8" />
     <title>Jeux de plateau P6</title>
   </head>
-
-  <header class="banniere">
-    <img class="image-banniere" src="../images/banniere2.jpg" alt="banniere" />
-  </header>
-  <body class="page">
-    <div class="row">
-      <div class="col-2 ryu-infos card">
+ <body class="page"></body>
+  <header class="d-flex justify-content-center" >
+   <img class="image-banniere" src="../images/banniere2.jpg" alt="banniere" />
+    </header>
+ 
+    <div class="game-display">
+      <div class="ryu-infos card">
         <img
           class="card-img-top"
           src="../images/Street-Fighter-Ryu.jpg"
@@ -35,14 +35,14 @@
         </div>
         <div class="card-footer"></div>
       </div>
-      <div class="col-8 middle-page ">
+      <div class="map-game">
         <button type="button" class="attack  btn-warning">ATTACK</button>
         <button type="button" class="defence btn-dark">DEFENCE</button>
-        <div id="base"></div>
+        <button type="button" class="jouez">JOUEZ</button> <div id="base"></div>  
       </div>
-      <button type="button" class="jouez">JOUEZ</button>
+   
 
-      <div class="col-2 ken-infos card">
+      <div class="ken-infos card">
         <img
           class="card-img-top"
           src="../images/Street-Fighter-Ken.jpg"
@@ -67,9 +67,9 @@
       <audio id="fight-start" src="../sound/fight-sound.mp3"></audio>
       <audio id="gun-sound" src="../sound/gun-sound.wav"></audio>
       <audio id="punch-sound" src="../sound/punch-sound.wav"></audio>
+      <audio id="sword-sound" src="../sound/sword-sound.wav"></audio>
     </div>
     <script src="../js/jquery.js"></script>
-    <script src="../js/obstacle.js"></script>
     <script src="../js/weapon.js"></script>
     <script src="../js/fighter.js"></script>
     <script src="../js/Cell.js"></script>
