@@ -39,7 +39,9 @@ h4 {
 }
 .attack,
 .defence {
-  margin-top: 12.6%;
+  margin: -293px;
+  display: flex;
+  justify-content: center;
   font-size: 44px;
   max-height: 100px;
   position: relative;
