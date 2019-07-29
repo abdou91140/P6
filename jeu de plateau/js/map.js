@@ -25,7 +25,6 @@ class Map {
                 obstacle.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
                 i++;
             } else {
-                location.reload()
             }
         }
     }
@@ -44,7 +43,6 @@ class Map {
                         break
                     }
                 } else {
-                    location.reload()
                 }
             }
         });

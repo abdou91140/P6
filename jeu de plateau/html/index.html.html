@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="../css/plateau.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta charset="UTF-8" />
+    <title>Jeux de plateau P6</title>
+  </head>
+ <body class="page">
+  <!--image banner of the game and info/profil of the players-->
+    <div class="game-display">
+      <div class="col col-sm-5 ryu-infos">
+        <img
+          class="img-profil"
+          src="../images/Street-Fighter-Ryu.jpg"
+          alt="image Ryu"
+        />
+        <div class="header-profil">
+          <h4 class="name">Ryu</h4>
+        </div>
+        <div class="block-profil-ryu">
+          <ol class="text-ryu">
+            <li>health : <span id="healthPlayer1"></span></li>
+            <li>weapon : <span id="weaponPlayer1"></span></li>
+            <li>power : <span id="powerWeapon1"></span></li>
+            <li>movement : <span id="movementPlayer1"></span></li>
+          </ol>
+        </div>
+        <div class="footer-ryu"></div>
+        <div class="arrow-key-ryu" style="text-align: center">
+            <button class="btn-outline-dark" onclick="CurrentGame.move('up')"><i class="fa fa-arrow-up"></i></button><br><br>
+            <button class="btn-outline-dark" onclick="CurrentGame.move('left')"><i class="fa fa-arrow-left"></i></button>
+            <button class="btn-outline-dark" onclick="CurrentGame.move('right')"><i class="fa fa-arrow-right"></i></button><br><br>
+            <button class="btn-outline-dark" onclick="CurrentGame.move('down')"><i class="fa fa-arrow-down"></i></button></button>
+          </div>  </div>
+          <img class="image-banniere" src="../images/banniere2.jpg">
+        </img>
+          <div class="col col-sm-5 ken-infos">
+            <img
+              class="img-profil"
+              src="../images/Street-Fighter-Ken.jpg"
+              alt="image Ken"
+            />
+            <div class="header-profil">
+              <h4 class="name">Ken</h4>
+            </div>
+            <div class="block-profil-ken">
+              <ol class="text-ken">
+                <li>health : <span id="healthPlayer2"></span></li>
+                <li>weapon : <span id="weaponPlayer2"></span></li>
+                <li>power : <span id="powerWeapon2"></span></li>
+                <li>movement : <span id="movementPlayer2"></span></li>
+              </ol>
+            </div>
+            <div class="footer-ken"></div>
+          <div class="arrow-key-ken" style="text-align: center">
+              <button class="btn-outline-dark" onclick="CurrentGame.move('up')"><i class="fa fa-arrow-up"></i></button><br><br>
+              <button class="btn-outline-dark" onclick="CurrentGame.move('left')"><i class="fa fa-arrow-left"></i></button>
+              <button class="btn-outline-dark" onclick="CurrentGame.move('right')"><i class="fa fa-arrow-right"></i></button><br><br>
+              <button class="btn-outline-dark" onclick="CurrentGame.move('down')"><i class="fa fa-arrow-down"></i></button></button>
+            </div>  </div>
+    </div>
+    <!--grid of the game with squares -->
+      <div id="map-game">
+        <span id="fight-button">
+            <button type="button" class="attack  btn-warning" style="display: inline;">ATTACK</button>
+            <button type="button" class="defence btn-dark" style="display: inline;">DEFENCE</button>
+        </span>
+        <button type="button" class="jouez">JOUEZ</button>
+      </div>
+      <!--sound effects-->
+      <audio id="intro" src="../sound/intro-sound.mp3"></audio>
+      <audio id="hadouken" src="../sound/hadouken.mp3"></audio>
+      <audio id="game-over" src="../sound/end-sound.mp3"></audio>
+      <audio id="fight-start" src="../sound/fight-sound.mp3"></audio>
+      <audio id="gun-sound" src="../sound/gun-sound.wav"></audio>
+      <audio id="punch-sound" src="../sound/punch-sound.wav"></audio>
+      <audio id="sword-sound" src="../sound/sword-sound.mp3"></audio>
+    
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/weapon.js"></script>
+    <script src="../js/fighter.js"></script>
+    <script src="../js/obstacle.js"></script>
+    <script src="../js/Cell.js"></script>
+    <script src="../js/map.js"></script>
+    <script src="../js/game.js"></script>
+    
+  </body>
+</html>
