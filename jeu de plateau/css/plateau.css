@@ -95,7 +95,7 @@ h4 {
 }
 
 img {
-  border-style: dotted !important;
+  border-style: double !important;
 }
 
 @keyframes shake {
