@@ -253,7 +253,7 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
   }
   displayTheFight() {
   $("#map-game").replaceWith(
- $("#fight-button").css("display","inline"))
+ $("#fight-button").css("display","flex"))
 $(".arrow-key-ryu").remove()
 $(".arrow-key-ken").remove()
 

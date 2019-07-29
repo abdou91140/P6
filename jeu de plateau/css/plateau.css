@@ -36,12 +36,10 @@ h4 {
 }
 #fight-button {
   display: none;
+  justify-content: space-evenly;
 }
 .attack,
 .defence {
-  margin: -293px;
-  display: flex;
-  justify-content: center;
   font-size: 44px;
   max-height: 100px;
   position: relative;
@@ -86,7 +84,7 @@ h4 {
   width: 100%;
   min-width: min-content;
   min-height: auto;
-  margin: 2px;
+  margin: 3px;
 }
 
 #map-game {
@@ -97,7 +95,7 @@ h4 {
 }
 
 img {
-  border-style: solid !important;
+  border-style: dotted !important;
 }
 
 @keyframes shake {
