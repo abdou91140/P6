@@ -68,11 +68,21 @@ h4 {
 }
 
 .ryu-infos,
-.ken-infos {
+.ken-infos { 
   background: white;
   max-height: fit-content;
   text-align: center;
   max-width: fit-content !important;
+}
+
+.arrow  {
+  display: contents;
+ 
+}
+.arrow-key-ryu,
+.arrow-key-ken{
+  margin: auto;
+  max-width: max-content;
 }
 .img-profil {
   border: inherit;
@@ -80,7 +90,7 @@ h4 {
 
 .game-display {
   display: -webkit-inline-flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
   min-width: min-content;
   min-height: auto;
