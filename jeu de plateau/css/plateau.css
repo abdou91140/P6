@@ -8,7 +8,7 @@
   z-index: 10;
   font-family: ARCADE;
   font-size: 28px;
-  min-width: fit-content;
+  min-height: 100vh;
 }
 
 span {
@@ -23,7 +23,7 @@ h4 {
 .jouez {
   z-index: 100;
   position: absolute;
-  margin-left: 47%;
+  margin : 47%;
   height: 100px;
   width: 101px;
   padding-left: 1px;
@@ -59,45 +59,17 @@ h4 {
   transform: translateY(4px);
 }
 
-.image-banniere {
-  margin: auto;
-  max-width: 100%;
-  align-content: center;
-  display: block;
-  margin-top: 1px;
-}
 
 .ryu-infos,
 .ken-infos { 
-  background: white;
-  max-height: fit-content;
-  text-align: center;
-  max-width: fit-content !important;
+border: 1px #666;
 }
 
-.arrow  {
-  display: contents;
- 
-}
-.arrow-key-ryu,
-.arrow-key-ken{
-  margin: auto;
-  max-width: max-content;
-}
-.img-profil {
-  border: inherit;
-}
 
-.game-display {
-  display: -webkit-inline-flex;
-  justify-content: space-between;
-  width: 100%;
-  min-width: min-content;
-  min-height: auto;
-  margin: 3px;
-}
+
 
 #map-game {
+
   justify-content:center;
   display: grid;
   grid-auto-flow: column;

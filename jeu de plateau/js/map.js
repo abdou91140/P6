@@ -98,7 +98,7 @@ class Map {
         }
     };
 }
-var mapGenerate = new Map(9);
+var mapGenerate = new Map(8);
 mapGenerate.generateCells();
 mapGenerate.placeObstacleCells(obstacle);
 mapGenerate.placeFighters(fightersArr);

@@ -12,14 +12,14 @@
     <meta charset="UTF-8" />
     <title>Jeux de plateau P6</title>
   </head>
- <body class="page">
+ <body class="page d-flex flex-column">
   <!--image banner of the game and info/profil of the players-->
   <img class="image-banniere" src="../images/banniere2.jpg">
 </img>
-   <div class="game-display">
-      <div class="col col-sm-5 ryu-infos">       
-                  <img
-                    class="img-profil"
+   <div class="game d-flex flex-row  flex-fill">
+    <div class="card ryu-infos m-auto">      
+      <img
+        class="card-img-top p-auto"
                     src="../images/Street-Fighter-Ryu.jpg"
                     alt="image Ryu"
                   />
@@ -31,9 +31,13 @@
                       <li>weapon : <span id="weaponPlayer1"></span></li>
                       <li>power : <span id="powerWeapon1"></span></li>
                       <li>movement : <span id="movementPlayer1"></span></li>
-                    </ol> </div>     
+                    </ol> </div> 
+                    <button type="button" class="jouez btn btn-dark btn-lg btn-block m-auto">JOUEZ</button>
+                      <!--grid of the game with squares -->
+    <div id="map-game"> 
+   </div>    
                   <!--End of ryu profil-->   
-                  <div class="arrow">
+                 <!-- <div class="arrow">
                       <div class="arrow-key-ryu" style="text-align: center">
                           <button class="btn-outline-dark" onclick="CurrentGame.move('up')"><i class="fa fa-arrow-up"></i></button><br><br>
                           <button class="btn-outline-dark" onclick="CurrentGame.move('left')"><i class="fa fa-arrow-left"></i></button>
@@ -45,11 +49,11 @@
                             <button class="btn-outline-dark" onclick="CurrentGame.move('left')"><i class="fa fa-arrow-left"></i></button>
                             <button class="btn-outline-dark" onclick="CurrentGame.move('right')"><i class="fa fa-arrow-right"></i></button><br><br>
                             <button class="btn-outline-dark" onclick="CurrentGame.move('down')"><i class="fa fa-arrow-down"></i></button></button>
-                        </div> </div>  
+                        </div> </div>  -->
                   <!--End of arrow keys-->
-                   <div class="col col-sm-5 ken-infos">      
+                   <div class="card ken-infos m-auto">      
             <img
-              class="img-profil"
+              class="card-img-top p-auto"
               src="../images/Street-Fighter-Ken.jpg"
               alt="image Ken"
             />
@@ -68,10 +72,7 @@
                     <button type="button" class="defence btn-dark" style="display: inline;">DEFENCE</button>
                 </span>
     
-    <!--grid of the game with squares -->
-    <div id="map-game"> 
-        <button type="button" class="jouez">JOUEZ</button>
-     </div>
+  
 
       <!--sound effects-->
       <audio id="intro" src="../sound/intro-sound.mp3"></audio>
