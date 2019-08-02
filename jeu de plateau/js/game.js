@@ -165,7 +165,6 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
       this.unsetlightAccessibleCells();
       this.lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
-      // faire méthod qui gère le décompte et le lit name nextMovement.
       this.currentPlayer.movementCount--;
     }
   }
