@@ -10,7 +10,11 @@ class Game {
   startGame() {
     let game = this;
     $(".jouez").click( function() {
-      $(this).fadeToggle(700);
+      $(this).fadeToggle(700),
+      $("#map-game").css("filter","initial")
+      $(".card").css("filter","initial")
+      $(".image-banniere").css("filter","initial");
+      ;
       game.choosePlayer();
     });
   }
@@ -235,7 +239,7 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
     this.nextToPlay()
     this.displayTheFight()
     $(".attack").click( () =>{     
-      this.animationOfFighting(this.opposentPlayer)
+      this.animationOfFighting()
        this.currentPlayer.defenceStance = false;
       this.currentPlayer.attack(this.opposentPlayer)
     });
@@ -253,13 +257,11 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
   }
   displayTheFight() {
   $("#map-game").replaceWith(
- $("#fight-button").css("display","flex"))
-$(".arrow-key-ryu").remove()
-$(".arrow-key-ken").remove()
+ $(".fight-button").css("display","flex"))
 
     document.getElementById("fight-start").play();
   }
-  animationOfFighting(opposentPlayer){
+  animationOfFighting(){
     if (this.opposentPlayer === this.players[1]) {
   $(".ken-infos").css({"animation": "shake 0.5s",
     "animation-iteration-count":"infiniti" })
@@ -279,7 +281,7 @@ $(".arrow-key-ken").remove()
       } else {
         endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
       }
-      $("#fight-button").toggle(function () {
+      $(".fight-button").toggle(function () {
         $(this).replaceWith(endGame)
       })
 

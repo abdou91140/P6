@@ -10,8 +10,8 @@
   font-size: 28px;
   min-height: 100vh;
   min-width: max-content;
-
 }
+
 .image-banniere{
   transform: scale(1.5);
 }
@@ -25,22 +25,28 @@ h4 {
 }
 
 .jouez {
+  filter: none;
   z-index: 100;
+  font-size:4em;
+  border-radius: 30px;
+  margin-top: 1.5em;
   position: absolute;
-  margin : 47%;
-  height: 100px;
-  width: 101px;
-  padding-left: 1px;
-  background-color: rgb(39, 35, 35);
-  border: none;
-  color: #ffffff;
+  color: rgb(255, 231, 93);
+  background-color:black;
+  box-shadow: 1px grey;
   text-align: center;
   overflow: hidden;
-  cursor: pointer;
+  cursor: -webkit-grabbing;
+  animation: colorblink 2s infinite;
 }
-#fight-button {
+@keyframes colorblink { 
+0% { }
+50% {  color:red;  } 
+}
+
+.fight-button {
   display: none;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 .attack,
 .defence {
@@ -64,17 +70,15 @@ h4 {
 }
 
 
-.ryu-infos,
-.ken-infos { 
-min-width: fit-content!important;
-border: 1px #666;
+.card { 
+max-width: fit-content!important;
+filter:blur(5px);
 }
-
-
-
-
+.image-banniere{
+  filter:blur(5px);
+}
 #map-game {
-
+filter:blur(5px);
   justify-content:center;
   display: grid;
   grid-auto-flow: column;
@@ -121,21 +125,3 @@ img {
   }
 }
 
-@media only screen and (max-width: 768px) {
-  /* smartphone*/
-  .game-display {
-    display: inline-block !important;
-  }
-  .ryu-infos,
-  .ken-infos {
-    display: table-header-group;
-    margin: initial;
-  }
-.map-game{ 
-  transform: scale(0.7, 0.7);
-  margin-top: -137px;
-}
-}
-@media only screen and (max-width: 767px) and (orientation: portrait) {
-  /*smartphone en mode portait */
-}
