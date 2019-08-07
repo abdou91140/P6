@@ -273,7 +273,7 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
 
   // méthode qui termine le jeux avec une santé arrivé à 0 et une image qui apparait selon le combatant battu.
   gameOver() {
-    if (this.opposentPlayer.health === 0) {
+    if (this.opposentPlayer.health <= 0 ) {
       document.getElementById("game-over").play();
       if (this.opposentPlayer === this.players[1]) {
         var endGame = "<img src=' ../images/ken-lose-image.jpg'>";
