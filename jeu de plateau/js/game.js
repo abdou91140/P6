@@ -156,12 +156,13 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
       this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate)
       this.currentPlayer.initCoordonate(oldCoordonate)
       this.currentPlayer.updateCoordonate(newCoordonate)
+      if(this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
+        this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
+        }
      if(this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)){
       this.fight()
      }
-      if(this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
-      this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
-      }
+     
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
       this.unsetlightAccessibleCells();
       this.lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
@@ -263,10 +264,10 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
   animationOfFighting(){
     if (this.opposentPlayer === this.players[1]) {
   $(".ken-infos").css({"animation": "shake 0.5s",
-    "animation-iteration-count":"infiniti" })
+    "animation-iteration-count":"2000" })
   } else {
     $(".ryu-infos").css({"animation": "shake 0.5s",
-    "animation-iteration-count":"infiniti" })
+    "animation-iteration-count":"2000" })
   }
   }
   // méthode d'attaque qui soustrait la santé de l'adversaire en fonction de la puissance de l'arme en posséssion, et de la méthode défence.
