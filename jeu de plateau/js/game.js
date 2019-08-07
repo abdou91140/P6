@@ -270,7 +270,7 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
   }
   }
   // méthode d'attaque qui soustrait la santé de l'adversaire en fonction de la puissance de l'arme en posséssion, et de la méthode défence.
-
+ 
   // méthode qui termine le jeux avec une santé arrivé à 0 et une image qui apparait selon le combatant battu.
   gameOver() {
     if (this.opposentPlayer.health <= 0 ) {
