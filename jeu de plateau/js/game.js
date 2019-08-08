@@ -199,11 +199,11 @@ class Game {
   }
   animationOfFighting() {
     let game = this;
-      $(".attack").click(function(){
-        if (game.opposentPlayer === game.players[1]) {
-       $(".ken-infos").effect("pulsate", "slow"); 
+      $(".attack").on("click",function(){
+        if (game.opposentPlayer === game.players[0]) {
+       $(".ken-infos").effect("pulsate", "fast", 2000); 
       } else {
-        $(".ryu-infos").effect( "pulsate", "slow" );  
+        $(".ryu-infos").effect( "pulsate", "fast", 2000); 
       };
     });
   }
