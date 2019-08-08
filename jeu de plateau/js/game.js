@@ -40,16 +40,16 @@ class Game {
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)];
     this.showWhoPlaying(this.currentPlayer);
-    this.lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y)
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y)
 
     // placer la fonction juste après choosePlayer.
   }
   // tour par tour avec changement de couleurs de l'arrière plan de celui qui joue.
   nextToPlay() {
-    this.unsetlightAccessibleCells();
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
     this.togglePlayer();
     this.showWhoPlaying(this.currentPlayer);
-    this.lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
   }
   togglePlayer() {
     if (this.currentPlayer === this.players[1]) {
@@ -76,42 +76,8 @@ class Game {
 
     }
   }
-checkIfCellExist(x,y){
-  if(x in this.mapGame.cells)  { 
-    if(y in this.mapGame.cells[x]) {
-      return true;
-    }
-  }
-  else false
-}
 
-checkIfCellHasobstacle(x,y) {
-  if (this.checkIfCellExist(x,y) && this.mapGame.cells[x][y].obstacle instanceof Obstacle) {
-    return false
-  }
-  return true
-}
-  checkIfCellHasWeapon(x, y) {
-    if (this.mapGame.cells[x][y].weapon instanceof Weapon) {
-      return true
-    }
-    return false;
-  }
-  checkIfCellHasFighter(x, y) {
-if(this.checkIfCellExist(x,y) && this.mapGame.cells[x][y].fighter!==null){       
-      return true
-    }else{
-      return false
-    }
- 
-}
-  checkIfCellContainFighter(x, y) {
-if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this.checkIfCellHasFighter(x,y+1)|| this.checkIfCellHasFighter(x,y-1)){  
- return true
-} else{
-  return false
-}
-  }
+  
   oldCoordonateOfPlayer(){
     let oldCoordonate = {
       x: this.currentPlayer.x,
@@ -151,21 +117,21 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
     ) {
       let newCoordonate = this.calculateNewCoordonate(direction)
      let oldCoordonate = this.currentPlayer.coordonateOfplayer()  
-      if(this.checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
-      if (this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
+      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
+      if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
       this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate)
       this.currentPlayer.initCoordonate(oldCoordonate)
       this.currentPlayer.updateCoordonate(newCoordonate)
-      if(this.checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
+      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
         this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
         }
-     if(this.checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)){
+     if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)){
       this.fight()
      }
      
       this.updateBoard(oldCoordonate.x, oldCoordonate.y);
-      this.unsetlightAccessibleCells();
-      this.lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
+      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
+      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
       this.currentPlayer.movementCount--;
     }
   }
@@ -205,35 +171,6 @@ if(this.checkIfCellHasFighter(x+1,y)|| this.checkIfCellHasFighter(x-1,y) || this
     $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`).html(cellimgNew);
   }
 
-  // méthode d'allumage des céllules de déplacement.
-  lightAccessibleCells(x,y) {
-   if(this.checkIfCellHasobstacle(x+1,y)){
-    $(`#${ x+ 1}-${y}`)
-      .css("background", "red")
-    }
-    if(this.checkIfCellHasobstacle(x-1,y)){
-    $(`#${x-1}-${y}`)
-      .css("background", "red")
-        }
-        if(this.checkIfCellHasobstacle(x,y+1)){
-              $(`#${x}-${y+1}`)
-      .css("background", "red")
-        }
-        if(this.checkIfCellHasobstacle(x,y-1)){
-      $(`#${x}-${y-1}`)
-      .css("background", "red")
-            }
-  }
-  // méthode d'initialiation de l'arrière plan en noir pour éteindre les céllules allumé en jaune.
-  unsetlightAccessibleCells() {
-    for (let x = 0; x < this.mapGame.boardSize + 1; x++) {
-      for (let y = 0; y < this.mapGame.boardSize + 1; y++) {
-        $(`#${x}-${y}`)
-          .css("background", "black")
-          .removeClass("authorized");
-      }
-    }
-  }
   // méthode de combat avec une
   fight() {
     this.nextToPlay()
