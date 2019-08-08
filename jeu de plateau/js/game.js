@@ -8,7 +8,7 @@ class Game {
   // method of beginning the game with a button with a fade effect in jquery //
   startGame() {
     let game = this;
-    $(".jouez").click(function() {
+    $(".jouez").click(function () {
       $(this).fadeToggle(700), $("#map-game").css("filter", "initial");
       $(".card").css("filter", "initial");
       $(".image-banniere").css("filter", "initial");
@@ -18,7 +18,7 @@ class Game {
   // keyboard key method for player movements //
   keyBiding() {
     let game = this;
-    $(document).keydown(function(e) {
+    $(document).keydown(function (e) {
       if (e.which == 38) {
         game.move("up");
       }
@@ -35,24 +35,17 @@ class Game {
   }
   // function who's choose randomly who is starting first and then the cells accessible for move light.
   choosePlayer() {
-    this.currentPlayer = this.players[
-      Math.floor(Math.random() * this.players.length)
+    this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)
     ];
     this.showWhoPlaying(this.currentPlayer);
-    this.mapGame.cells[this.currentPlayer.x][
-      this.currentPlayer.y
-    ].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
   // tour par tour avec changement de couleurs de l'arrière plan de celui qui joue.
   nextToPlay() {
-    this.mapGame.cells[this.currentPlayer.x][
-      this.currentPlayer.y
-    ].unsetlightAccessibleCells();
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
     this.togglePlayer();
     this.showWhoPlaying(this.currentPlayer);
-    this.mapGame.cells[this.currentPlayer.x][
-      this.currentPlayer.y
-    ].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
+    this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
   togglePlayer() {
     if (this.currentPlayer === this.players[1]) {
@@ -117,46 +110,29 @@ class Game {
       let oldCoordonate = this.currentPlayer.coordonateOfplayer();
 
       if (
-        this.mapGame.cells[this.currentPlayer.x][
-          this.currentPlayer.y
-        ].checkIfCellExist(newCoordonate.x, newCoordonate.y)
+        this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)
       ) {
         if (
-          this.mapGame.cells[this.currentPlayer.x][
-            this.currentPlayer.y
-          ].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
         ) {
-          this.mapGame.cells[newCoordonate.x][
-            newCoordonate.y
-          ].transferObjetCells(newCoordonate);
+          this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate);
           this.currentPlayer.initCoordonate(oldCoordonate);
           this.currentPlayer.updateCoordonate(newCoordonate);
 
           if (
-            this.mapGame.cells[this.currentPlayer.x][
-              this.currentPlayer.y
-            ].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
+            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
           ) {
             this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
           }
           if (
-            this.mapGame.cells[this.currentPlayer.x][
-              this.currentPlayer.y
-            ].checkIfCellContainFighter(
-              this.currentPlayer.x,
-              this.currentPlayer.y
-            )
+            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x,this.currentPlayer.y)
           ) {
             this.fight();
           }
 
           this.updateBoard(oldCoordonate.x, oldCoordonate.y);
-          this.mapGame.cells[this.currentPlayer.x][
-            this.currentPlayer.y
-          ].unsetlightAccessibleCells();
-          this.mapGame.cells[this.currentPlayer.x][
-            this.currentPlayer.y
-          ].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
           this.currentPlayer.movementCount--;
         }
       }
@@ -222,17 +198,14 @@ class Game {
     document.getElementById("fight-start").play();
   }
   animationOfFighting() {
-    if (this.opposentPlayer === this.players[1]) {
-      $(".ken-infos").css({
-        animation: "shake 0.5s",
-        "animation-iteration-count": "2000"
-      });
-    } else {
-      $(".ryu-infos").css({
-        animation: "shake 0.5s",
-        "animation-iteration-count": "2000"
-      });
-    }
+    let game = this;
+      $(".attack").click(function(){
+        if (game.opposentPlayer === game.players[1]) {
+       $(".ken-infos").effect("pulsate", "slow"); 
+      } else {
+        $(".ryu-infos").effect( "pulsate", "slow" );  
+      };
+    });
   }
   // méthode d'attaque qui soustrait la santé de l'adversaire en fonction de la puissance de l'arme en posséssion, et de la méthode défence.
 
@@ -245,7 +218,7 @@ class Game {
       } else {
         endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
       }
-      $(".fight-button").toggle(function() {
+      $(".fight-button").toggle(function () {
         $(this).replaceWith(endGame);
       });
     }
@@ -289,6 +262,6 @@ CurrentGame.displayInfoPlayer();
 CurrentGame.startGame();
 CurrentGame.keyBiding();
 
-window.onload = function() {
+window.onload = function () {
   document.getElementById("intro").play();
 };
