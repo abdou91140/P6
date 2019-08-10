@@ -181,7 +181,6 @@ class Game {
       this.currentPlayer.attack(this.opposentPlayer);
     });
     $(".defence").click(() => {
-      this.animationOfFighting();
       this.currentPlayer.defenceStance = true;
       this.nextToPlay();
     });

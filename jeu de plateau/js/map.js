@@ -38,11 +38,11 @@ class Map {
                 fighter.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
                // if(this.cells[randomNumberXYCell.x]<= this.boardSize && this.cells[randomNumberXYCell.y]<= this.boardSize && this.cells[randomNumberXYCell.x]>=0 && this.cells[randomNumberXYCell.y].y>= 0 ){
                 if (cell.obstacle === null && cell.fighter === null) {
-                    if( cell.x+1 && cell.x-1 !== fighter.x || cell.y+1 && cell.y-1 !== fighter.y){ 
+                }else if( fighter.x+1 && fighter.x-1 !== fighter.x || fighter.y+1 && fighter.y-1 !== fighter.y){ 
                         this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
                         break
                     }
-                } else {
+                 else {
                 }
             }
         });
@@ -98,7 +98,7 @@ class Map {
         }
     };
 }
-var mapGenerate = new Map(8);
+var mapGenerate = new Map(9);
 mapGenerate.generateCells();
 mapGenerate.placeObstacleCells(obstacle);
 mapGenerate.placeFighters(fightersArr);
