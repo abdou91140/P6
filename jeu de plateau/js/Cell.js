@@ -80,9 +80,9 @@ class Cell {
       updateCellImage(x, y) {
         let imgCell;
         if (this.cells[x][y].weapon instanceof Weapon) {
-          imgCell = "../images/" + this.cells[x][y].weapon.img;
+          imgCell = "./images/" + this.cells[x][y].weapon.img;
         } else {
-          imgCell = "../images/" + this.cells[x][y].img;
+          imgCell = "./images/" + this.cells[x][y].img;
         }
         return imgCell;
       }

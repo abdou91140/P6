@@ -119,7 +119,7 @@ class Game {
         this.checkIfCellExist(this.currentPlayer.x,this.currentPlayer.y)
       ) {
         if (
-          mapGenerate.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
+          this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
         ) {
           this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate);
           this.currentPlayer.initCoordonate(oldCoordonate);
@@ -221,9 +221,9 @@ class Game {
     if (this.opposentPlayer.health <= 0) {
       document.getElementById("game-over").play();
       if (this.opposentPlayer === this.players[1]) {
-        var endGame = "<img src=' ../images/ken-lose-image.jpg'>";
+        var endGame = "<img src=' ./images/ken-lose-image.jpg'>";
       } else {
-        endGame = "<img src=' ../images/ryu-lose-image.jpg'>";
+        endGame = "<img src=' ./images/ryu-lose-image.jpg'>";
       }
       $(".fight-button").toggle(function () {
         $(this).replaceWith(endGame);

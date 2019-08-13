@@ -9,7 +9,7 @@ class Map {
         for (let x = 0; x < this.boardSize; x++) {
             this.cells[x] = [];
             for (let y = 0; y < this.boardSize; y++) {
-                this.cells[x][y] = new Cell(null, null, null, null, x, y, "../images/white_square.jpg");
+                this.cells[x][y] = new Cell(null, null, null, null, x, y, "./images/white_square.jpg");
             }
         }
     }
@@ -86,10 +86,10 @@ class Map {
                         caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.obstacle.img  + ">" + "</div>";
                     }
                     if (cellInRow.weapon instanceof Weapon) {
-                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "../images/" + cellInRow.weapon.img + ">" + "</div>";
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "./images/" + cellInRow.weapon.img + ">" + "</div>";
                     }
                     if (cellInRow.fighter instanceof Fighter) {
-                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "../images/" + cellInRow.fighter.img + ">" + "</div>";
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "./images/" + cellInRow.fighter.img + ">" + "</div>";
                     }
                     return caseContent
                 })

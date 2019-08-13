@@ -28,7 +28,7 @@ class Fighter {
       }
 // change the image of the cell destination after mov //
       updateCellFighterImage() {
-        let imgCellDestination = "../images/" + this.img;
+        let imgCellDestination = "./images/" + this.img;
         return imgCellDestination;
       }
 // function of attack with condition of if opposent player is in defence stance, the injurie is half efFicient //      

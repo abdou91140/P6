@@ -5,4 +5,4 @@ class Obstacle {
         this.img = img;
     }
 } 
-var obstacle= new Obstacle(0,0,"../images/red_square.jpg" );
+var obstacle= new Obstacle(0,0,"./images/red_square.jpg" );
