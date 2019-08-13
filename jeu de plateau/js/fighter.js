@@ -34,13 +34,15 @@ class Fighter {
 // function of attack with condition of if opposent player is in defence stance, the injurie is half efFicient //      
     attack(opposentPlayer) {
       var healthValue = opposentPlayer.health;
+    
       if (opposentPlayer.defenceStance === true) {
          healthValue = healthValue - this.weapon.power * 0.5;
          }   else {
          healthValue = healthValue - this.weapon.power;
        }
           opposentPlayer.setHealth(healthValue)
-          CurrentGame.processFight()
+          CurrentGame.processFight()    
+          this.defenceStance;
     }
     setHealth(health){
       if(health < 0){
@@ -48,7 +50,6 @@ class Fighter {
       }else{
         this.health = health;
       }
-
     }
 };
 // array contained the players //

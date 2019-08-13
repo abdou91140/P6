@@ -61,13 +61,11 @@ class Game {
     if (x === this.players[0]) {
       $(".ryu-infos").css("background-color", "yellow");
       $(".ken-infos").css("background-color", "white");
-      $(".arrow-key-ryu").show();
-      $(".arrow-key-ken").hide();
+     
     } else {
       $(".ken-infos").css("background-color", "yellow");
       $(".ryu-infos").css("background-color", "white");
-      $(".arrow-key-ryu").hide();
-      $(".arrow-key-ken").show();
+   
     }
   }
 
@@ -99,7 +97,15 @@ class Game {
     }
     return newCoordonate;
   }
-
+  checkIfCellExist(x,y){
+    if(x in CurrentGame.mapGame.cells)  { 
+      if(y in CurrentGame.mapGame.cells[x]) {
+        return true;
+      }
+    }
+    else false
+  }
+  
   // méthode de mouvement qui transmet les données du joueur qui doit se déplacer vers la céllule de destination.
   move(direction) {
     if (
@@ -110,10 +116,10 @@ class Game {
       let oldCoordonate = this.currentPlayer.coordonateOfplayer();
 
       if (
-        this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)
+        this.checkIfCellExist(this.currentPlayer.x,this.currentPlayer.y)
       ) {
         if (
-          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
+          mapGenerate.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
         ) {
           this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate);
           this.currentPlayer.initCoordonate(oldCoordonate);
@@ -175,17 +181,20 @@ class Game {
   fight() {
     this.nextToPlay();
     this.displayTheFight();
-    $(".attack").click(() => {
-      this.animationOfFighting();
-      this.currentPlayer.defenceStance = false;
-      this.currentPlayer.attack(this.opposentPlayer);
+    let game = this;
+
+    $(".attack").on("click",function() {
+      game.currentPlayer.defenceStance = false;
+      game.currentPlayer.attack(game.opposentPlayer);
     });
-    $(".defence").click(() => {
-      this.currentPlayer.defenceStance = true;
-      this.nextToPlay();
+    $(".defence").on("click",function(){
+      game.nextToPlay();
+      game.currentPlayer.defenceStance = true;
     });
+
   }
   processFight() {
+    this.animationOfFighting();
     this.gameOver();
     this.soundEffect(this.currentPlayer.weapon.name);
     this.displayInfoPlayer();
@@ -193,16 +202,15 @@ class Game {
   }
   displayTheFight() {
     $("#map-game").replaceWith($(".fight-button").css("display", "flex"));
-
     document.getElementById("fight-start").play();
   }
   animationOfFighting() {
     let game = this;
-      $(".attack").on("click",function(){
+      $(".attack").one("click",function(){
         if (game.opposentPlayer === game.players[0]) {
-       $(".ken-infos").effect("pulsate", "fast", 2000); 
+       $(".ken-infos").effect("pulsate", "normal", 500); 
       } else {
-        $(".ryu-infos").effect( "pulsate", "fast", 2000); 
+        $(".ryu-infos").effect( "pulsate", "normal", 500); 
       };
     });
   }

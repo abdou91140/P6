@@ -9,29 +9,21 @@ class Cell {
         this.y = y;
         this.img = img;
     }
-    checkIfCellExist(x,y){
-      if(x in CurrentGame.mapGame.cells)  { 
-        if(y in CurrentGame.mapGame.cells[x]) {
-          return true;
-        }
-      }
-      else false
-    }
-    
+ 
     checkIfCellHasobstacle(x,y) {
-      if (this.checkIfCellExist(x,y) && CurrentGame.mapGame.cells[x][y].obstacle instanceof Obstacle) {
+      if (CurrentGame.checkIfCellExist(x,y) && mapGenerate.cells[x][y].obstacle instanceof Obstacle) {
         return false
       }
       return true
     }
       checkIfCellHasWeapon(x, y) {
-        if (CurrentGame.mapGame.cells[x][y].weapon instanceof Weapon) {
+        if (this.cells[x][y].weapon instanceof Weapon) {
           return true
         }
         return false;
       }
       checkIfCellHasFighter(x, y) {
-    if(this.checkIfCellExist(x,y) && CurrentGame.mapGame.cells[x][y].fighter!==null){       
+    if(this.checkIfCellExist(x,y) && this.cells[x][y].fighter!==null){       
           return true
         }else{
           return false
@@ -67,8 +59,8 @@ class Cell {
    }
    // méthode d'initialiation de l'arrière plan en noir pour éteindre les céllules allumé en jaune.
    unsetlightAccessibleCells() {
-     for (let x = 0; x < CurrentGame.mapGame.boardSize + 1; x++) {
-       for (let y = 0; y < CurrentGame.mapGame.boardSize + 1; y++) {
+     for (let x = 0; x < mapGenerate.boardSize + 1; x++) {
+       for (let y = 0; y < mapGenerate.boardSize + 1; y++) {
          $(`#${x}-${y}`)
            .css("background", "black")
            .removeClass("authorized");
@@ -77,7 +69,7 @@ class Cell {
    }
 // Method for switching objects between two cells // 
     transferObjetCells(newCoordonate){
-        CurrentGame.mapGame.cells[newCoordonate.x][newCoordonate.y].fighter = CurrentGame.currentPlayer;
+        this.cells[newCoordonate.x][newCoordonate.y].fighter = CurrentGame.currentPlayer;
       }
 // erase an image in the cell //
     clearCell(x, y) {
@@ -87,10 +79,10 @@ class Cell {
 // replace the image of the cell //
       updateCellImage(x, y) {
         let imgCell;
-        if (CurrentGame.mapGame.cells[x][y].weapon instanceof Weapon) {
-          imgCell = "../images/" + CurrentGame.mapGame.cells[x][y].weapon.img;
+        if (this.cells[x][y].weapon instanceof Weapon) {
+          imgCell = "../images/" + this.cells[x][y].weapon.img;
         } else {
-          imgCell = "../images/" + CurrentGame.mapGame.cells[x][y].img;
+          imgCell = "../images/" + this.cells[x][y].img;
         }
         return imgCell;
       }
