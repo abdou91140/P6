@@ -6,15 +6,15 @@
 .page {
   background-color: black;
   z-index: 10;
-  font-family: ARCADE;
-  font-size: 28px;
+  font: 28px ARCADE, sans-serif;
   min-height: 100vh;
   min-width: max-content;
 }
 
-.image-banniere{
+.image-banniere {
   transform: scale(1.5);
 }
+
 span {
   color: red;
 }
@@ -26,27 +26,30 @@ h4 {
 
 .jouez {
   z-index: 100;
-  font-size:4em;
+  font-size: 4em;
   border-radius: 30px;
-  margin-top: 1.7em;
   position: absolute;
+  overflow: visible;
   color: rgb(255, 231, 93);
-  background-color:black;
+  background-color: black;
   box-shadow: 1px grey;
-  text-align: center;
-  overflow: hidden;
   cursor: -webkit-grabbing;
   animation: colorblink 2s infinite;
 }
-@keyframes colorblink { 
-0% { }
-50% {  color:red;  } 
+
+@keyframes colorblink {
+  0% {}
+
+  50% {
+    color: red;
+  }
 }
 
 .fight-button {
   display: none;
   justify-content: center;
 }
+
 .attack,
 .defence {
   font-size: 44px;
@@ -70,15 +73,18 @@ h4 {
 
 .card { 
 max-width: fit-content;
+max-height: fit-content;
+filter: blur(5px);
 
-filter:blur(5px);
 }
-.image-banniere{
-  filter:blur(5px);
+
+.image-banniere {
+  filter: blur(5px);
 }
+
 #map-game {
-filter:blur(5px);
-  justify-content:center;
+  filter: blur(5px);
+  justify-content: center;
   display: grid;
   grid-auto-flow: column;
   position: relative;
@@ -86,41 +92,5 @@ filter:blur(5px);
 
 img {
   border-style: double !important;
-}
-
-@keyframes shake {
-  0% {
-    transform: translate(1px, 1px) rotate(0deg);
-  }
-  10% {
-    transform: translate(-1px, -2px) rotate(-1deg);
-  }
-  20% {
-    transform: translate(-3px, 0px) rotate(1deg);
-  }
-  30% {
-    transform: translate(3px, 2px) rotate(0deg);
-  }
-  40% {
-    transform: translate(1px, -1px) rotate(1deg);
-  }
-  50% {
-    transform: translate(-1px, 2px) rotate(-1deg);
-  }
-  60% {
-    transform: translate(-3px, 1px) rotate(0deg);
-  }
-  70% {
-    transform: translate(3px, 1px) rotate(-1deg);
-  }
-  80% {
-    transform: translate(-1px, -1px) rotate(1deg);
-  }
-  90% {
-    transform: translate(1px, 2px) rotate(0deg);
-  }
-  100% {
-    transform: translate(1px, -2px) rotate(-1deg);
-  }
 }
 

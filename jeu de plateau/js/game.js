@@ -8,8 +8,9 @@ class Game {
   // method of beginning the game with a button with a fade effect in jquery //
   startGame() {
     let game = this;
-    $(".jouez").click(function () {
-      $(this).fadeToggle(700), $("#map-game").css("filter", "initial");
+    $(".jouez").on("click",function () {
+      $(this).fadeToggle(700)
+      $("#map-game").css("filter", "initial");
       $(".card").css("filter", "initial");
       $(".image-banniere").css("filter", "initial");
       game.choosePlayer();
@@ -118,27 +119,27 @@ class Game {
       if (
         this.checkIfCellExist(this.currentPlayer.x,this.currentPlayer.y)
       ) {
-        if (
-          this.checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)
+       if (
+         this.mapGame.cells[newCoordonate.x][newCoordonate.y].checkIfCellHasobstacle()
         ) {
-          this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate);
+          this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells();
           this.currentPlayer.initCoordonate(oldCoordonate);
           this.currentPlayer.updateCoordonate(newCoordonate);
-
+          
           if (
-            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)
+            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon()
           ) {
             this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
           }
           if (
-            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x,this.currentPlayer.y)
+            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter()
           ) {
             this.fight();
           }
 
           this.updateBoard(oldCoordonate.x, oldCoordonate.y);
           this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
-          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells();
           this.currentPlayer.movementCount--;
         }
       }
@@ -168,10 +169,11 @@ class Game {
   }
 
   updateBoard(x, y) {
-    this.mapGame.cells[x][y].clearCell(x, y);
+    this.mapGame.cells[x][y].clearCell();
     let cellimgOld = this.createNewElmImage();
-    cellimgOld.src = this.mapGame.cells[x][y].updateCellImage(x, y);
+    cellimgOld.src = this.mapGame.cells[x][y].updateCellImage();
     $(`#${x}-${y}`).html(cellimgOld);
+    
     let cellimgNew = this.createNewElmImage();
     cellimgNew.src = this.currentPlayer.updateCellFighterImage();
     $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`).html(cellimgNew);
