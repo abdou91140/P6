@@ -1,12 +1,12 @@
-// Objet du déroulement du jeux , avec les fonctions pour le mouvements des joueurs , fonctions d'affichage , fonctions de combat, et d'effets sonore //
+// game settings and gameplay. //
 class Game {
   constructor(mapGame, players) {
     this.mapGame = mapGame;
     this.players = players;
     this.currentPlayer;
   }
-  // method of beginning the game with a button with a fade effect in jquery //
-  startGame() {
+// start of the game when the button is clicked and the background becomes clear. // 
+ startGame() {
     let game = this;
     $(".jouez").on("click",function () {
       $(this).fadeToggle(700)
@@ -34,20 +34,21 @@ class Game {
       }
     });
   }
-  // function who's choose randomly who is starting first and then the cells accessible for move light.
+// method that randomly chooses who starts to play first. //
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)
     ];
     this.showWhoPlaying(this.currentPlayer);
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
-  // tour par tour avec changement de couleurs de l'arrière plan de celui qui joue.
-  nextToPlay() {
+// turn-based management method . //
+nextToPlay() {
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
     this.togglePlayer();
     this.showWhoPlaying(this.currentPlayer);
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
+// method that swaps the players. //
   togglePlayer() {
     if (this.currentPlayer === this.players[1]) {
       this.currentPlayer = this.players[0];
@@ -57,7 +58,7 @@ class Game {
       this.opposentPlayer = this.players[0];
     }
   }
-
+// method of changing the color of the background of the current player. //
   showWhoPlaying(x) {
     if (x === this.players[0]) {
       $(".ryu-infos").css("background-color", "yellow");
@@ -69,7 +70,7 @@ class Game {
    
     }
   }
-
+// method saving the player's current position. //
   oldCoordonateOfPlayer() {
     let oldCoordonate = {
       x: this.currentPlayer.x,
@@ -77,8 +78,9 @@ class Game {
     };
     return oldCoordonate;
   }
+// motion position search method. //
   calculateNewCoordonate(direction) {
-    let newCoordonate = this.currentPlayer.coordonateOfplayer();
+    let newCoordonate = this.currentPlayer.movementOfplayer();
     switch (direction) {
       case "right":
         newCoordonate.x = newCoordonate.x + 1;
@@ -98,7 +100,8 @@ class Game {
     }
     return newCoordonate;
   }
-  checkIfCellExist(x,y){
+// method of checking the existence of the given cell. //
+  cellExist(x,y){
     if(x in CurrentGame.mapGame.cells)  { 
       if(y in CurrentGame.mapGame.cells[x]) {
         return true;
@@ -106,44 +109,32 @@ class Game {
     }
     else false
   }
-  
-  // méthode de mouvement qui transmet les données du joueur qui doit se déplacer vers la céllule de destination.
+// player movement management method. //
   move(direction) {
     if (
       this.currentPlayer.move === true &&
       this.currentPlayer.movementCount > 0
     ) {
-      let newCoordonate = this.calculateNewCoordonate(direction);
-      let oldCoordonate = this.currentPlayer.coordonateOfplayer();
-
-      if (
-        this.checkIfCellExist(this.currentPlayer.x,this.currentPlayer.y)
-      ) {
-       if (
-         this.mapGame.cells[newCoordonate.x][newCoordonate.y].checkIfCellHasobstacle()
-        ) {
-          this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells();
-          this.currentPlayer.initCoordonate(oldCoordonate);
-          this.currentPlayer.updateCoordonate(newCoordonate);
-          
-          if (
-            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon()
-          ) {
-            this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
-          }
-          if (
-            this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter()
-          ) {
-            this.fight();
-          }
-
-          this.updateBoard(oldCoordonate.x, oldCoordonate.y);
-          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
-          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells();
-          this.currentPlayer.movementCount--;
+      let newCoordonate = this.calculateNewCoordonate(direction)
+     let oldCoordonate = this.currentPlayer.movementOfplayer()  
+      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
+      if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
+      this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate)
+      this.currentPlayer.initCoordonate(oldCoordonate)
+      this.currentPlayer.updateCoordonate(newCoordonate)
+      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
+        this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
         }
-      }
+     if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)){
+      this.fight()
+     }  
+      this.updateBoard(oldCoordonate.x, oldCoordonate.y);
+      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
+      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
+      this.currentPlayer.movementCount--;
     }
+  }
+}
     if (
       this.currentPlayer.movementCount === 0 &&
       this.currentPlayer.move === true
@@ -152,34 +143,31 @@ class Game {
       this.nextToPlay();
     }
   }
-  // méthode qui vérifie si la céllule de destinations contient une armes et l'échange avec le joueur si il passe dessus.
+
+// method of swapping the player's weapon with that of the cell. //
   swapWeapon(x, y) {
     var weaponExchange = this.mapGame.cells[x][y].weapon;
     this.mapGame.cells[x][y].weapon = this.currentPlayer.weapon;
     this.currentPlayer.weapon = weaponExchange;
     this.displayInfoPlayer();
   }
-  // méthode de détection du joueur adverse sur une céllule voisine de celle de destination, et lancement du combat. Avec disparition du tableau et  apparition des boutons pour combatre
-
-  // déplacement des images en mouvement
-
+// method of creating an image html element. //
   createNewElmImage() {
     let cellOrigine = document.createElement("img");
     return cellOrigine;
   }
-
+// method for updating DOM elements. //
   updateBoard(x, y) {
-    this.mapGame.cells[x][y].clearCell();
+    this.mapGame.cells[x][y].initCellImage(x, y);
     let cellimgOld = this.createNewElmImage();
-    cellimgOld.src = this.mapGame.cells[x][y].updateCellImage();
+    cellimgOld.src = this.mapGame.cells[x][y].updateCellImage(x, y);
     $(`#${x}-${y}`).html(cellimgOld);
-    
+
     let cellimgNew = this.createNewElmImage();
     cellimgNew.src = this.currentPlayer.updateCellFighterImage();
     $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`).html(cellimgNew);
   }
-
-  // méthode de combat avec une
+// start the fighting condition. //
   fight() {
     this.nextToPlay();
     this.displayTheFight();
@@ -193,8 +181,8 @@ class Game {
       game.nextToPlay();
       game.currentPlayer.defenceStance = true;
     });
-
-  }
+  } 
+// fight management method. //
   processFight() {
     this.animationOfFighting();
     this.gameOver();
@@ -202,10 +190,12 @@ class Game {
     this.displayInfoPlayer();
     this.nextToPlay();
   }
+// method of displaying control elements for combat. //
   displayTheFight() {
     $("#map-game").replaceWith($(".fight-button").css("display", "flex"));
     document.getElementById("fight-start").play();
   }
+// effect method on the information blocks of the players. //
   animationOfFighting() {
     let game = this;
       $(".attack").one("click",function(){
@@ -216,9 +206,7 @@ class Game {
       };
     });
   }
-  // méthode d'attaque qui soustrait la santé de l'adversaire en fonction de la puissance de l'arme en posséssion, et de la méthode défence.
-
-  // méthode qui termine le jeux avec une santé arrivé à 0 et une image qui apparait selon le combatant battu.
+// method that ends the game with a health that has reached 0 or less and an image appears according to the defeated fighter. //
   gameOver() {
     if (this.opposentPlayer.health <= 0) {
       document.getElementById("game-over").play();
@@ -232,7 +220,7 @@ class Game {
       });
     }
   }
-  // méthode d'effet sonore.
+  // method sound effect. //
   soundEffect(weaponName) {
     switch (weaponName) {
       case "Fireball":
@@ -254,7 +242,7 @@ class Game {
         break;
     }
   }
-  // méthode de mise à jour des infos des 2 joeurs.
+  // method of updating information of both players. //
   displayInfoPlayer() {
     $("#healthPlayer1").text(this.players[0].health);
     $("#healthPlayer2").text(this.players[1].health);
@@ -272,5 +260,5 @@ CurrentGame.startGame();
 CurrentGame.keyBiding();
 
 window.onload = function () {
-  document.getElementById("intro").play();
+document.getElementById("intro").play();
 };

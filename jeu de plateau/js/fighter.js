@@ -11,13 +11,13 @@ class Fighter {
         this.move = true;
         this.defenceStance;
     }; 
-// coordonate of the destination of the fighter // 
-    coordonateOfplayer(){
+// possible movement of the player. //
+    movementOfplayer(){
       let newCoordonate= { x: this.x,
       y: this.y }
       return newCoordonate
       }
-// update coodonate after calling the move function // 
+// update coordonate of the // 
       updateCoordonate(newCoordonate){
         this.x = newCoordonate.x;
         this.y = newCoordonate.y;
@@ -26,24 +26,27 @@ class Fighter {
       initCoordonate(oldCoordonate){
         CurrentGame.mapGame.cells[oldCoordonate.x][oldCoordonate.y].fighter = null;     
       }
-// change the image of the cell destination after mov //
+
+// update the image of the fighter contained in the cell. //
       updateCellFighterImage() {
         let imgCellDestination = "./images/" + this.img;
         return imgCellDestination;
       }
-// function of attack with condition of if opposent player is in defence stance, the injurie is half efFicient //      
+// method of attack which according to the condition divides by two the sudden damage. //
     attack(opposentPlayer) {
       var healthValue = opposentPlayer.health;
     
       if (opposentPlayer.defenceStance === true) {
          healthValue = healthValue - this.weapon.power * 0.5;
+         this.defenceStance = (this.defenceStance != opposentPlayer.defenceStance);
          }   else {
          healthValue = healthValue - this.weapon.power;
        }
           opposentPlayer.setHealth(healthValue)
           CurrentGame.processFight()    
-          this.defenceStance;
     }
+    
+// method to stop the fight at zero health or if sudden damage is less than zero health. //
     setHealth(health){
       if(health < 0){
         this.health = 0;
@@ -52,5 +55,5 @@ class Fighter {
       }
     }
 };
-// array contained the players //
+// array contained the fighters //
 var fightersArr = [Ryu = new Fighter("Ryu", 100, fireball, 0, 0, "Street-Fighter-Ryu.jpg"), Ken = new Fighter("Ken", 100, fireball, 0, 0, "Street-Fighter-Ken.jpg")];
