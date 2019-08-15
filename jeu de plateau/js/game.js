@@ -5,10 +5,10 @@ class Game {
     this.players = players;
     this.currentPlayer;
   }
-// start of the game when the button is clicked and the background becomes clear. // 
- startGame() {
+  // start of the game when the button is clicked and the background becomes clear. // 
+  startGame() {
     let game = this;
-    $(".jouez").on("click",function () {
+    $(".jouez").on("click", function () {
       $(this).fadeToggle(700)
       $("#map-game").css("filter", "initial");
       $(".card").css("filter", "initial");
@@ -34,21 +34,21 @@ class Game {
       }
     });
   }
-// method that randomly chooses who starts to play first. //
+  // method that randomly chooses who starts to play first. //
   choosePlayer() {
     this.currentPlayer = this.players[Math.floor(Math.random() * this.players.length)
     ];
     this.showWhoPlaying(this.currentPlayer);
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
-// turn-based management method . //
-nextToPlay() {
+  // turn-based management method . //
+  nextToPlay() {
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
     this.togglePlayer();
     this.showWhoPlaying(this.currentPlayer);
     this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y);
   }
-// method that swaps the players. //
+  // method that swaps the players. //
   togglePlayer() {
     if (this.currentPlayer === this.players[1]) {
       this.currentPlayer = this.players[0];
@@ -58,19 +58,19 @@ nextToPlay() {
       this.opposentPlayer = this.players[0];
     }
   }
-// method of changing the color of the background of the current player. //
+  // method of changing the color of the background of the current player. //
   showWhoPlaying(x) {
     if (x === this.players[0]) {
       $(".ryu-infos").css("background-color", "yellow");
       $(".ken-infos").css("background-color", "white");
-     
+
     } else {
       $(".ken-infos").css("background-color", "yellow");
       $(".ryu-infos").css("background-color", "white");
-   
+
     }
   }
-// method saving the player's current position. //
+  // method saving the player's current position. //
   oldCoordonateOfPlayer() {
     let oldCoordonate = {
       x: this.currentPlayer.x,
@@ -78,7 +78,7 @@ nextToPlay() {
     };
     return oldCoordonate;
   }
-// motion position search method. //
+  // motion position search method. //
   calculateNewCoordonate(direction) {
     let newCoordonate = this.currentPlayer.movementOfplayer();
     switch (direction) {
@@ -100,41 +100,41 @@ nextToPlay() {
     }
     return newCoordonate;
   }
-// method of checking the existence of the given cell. //
-  cellExist(x,y){
-    if(x in CurrentGame.mapGame.cells)  { 
-      if(y in CurrentGame.mapGame.cells[x]) {
+  // method of checking the existence of the given cell. //
+  cellExist(x, y) {
+    if (x in CurrentGame.mapGame.cells) {
+      if (y in CurrentGame.mapGame.cells[x]) {
         return true;
       }
     }
     else false
   }
-// player movement management method. //
+  // player movement management method. //
   move(direction) {
     if (
       this.currentPlayer.move === true &&
       this.currentPlayer.movementCount > 0
     ) {
       let newCoordonate = this.calculateNewCoordonate(direction)
-     let oldCoordonate = this.currentPlayer.movementOfplayer()  
-      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)) { 
-      if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
-      this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate)
-      this.currentPlayer.initCoordonate(oldCoordonate)
-      this.currentPlayer.updateCoordonate(newCoordonate)
-      if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)){
-        this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
+      let oldCoordonate = this.currentPlayer.movementOfplayer()
+      if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellExist(newCoordonate.x, newCoordonate.y)) {
+        if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasobstacle(newCoordonate.x, newCoordonate.y)) {
+          this.mapGame.cells[newCoordonate.x][newCoordonate.y].transferObjetCells(newCoordonate)
+          this.currentPlayer.initCoordonate(oldCoordonate)
+          this.currentPlayer.updateCoordonate(newCoordonate)
+          if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellHasWeapon(newCoordonate.x, newCoordonate.y)) {
+            this.swapWeapon(this.currentPlayer.x, this.currentPlayer.y);
+          }
+          if (this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)) {
+            this.fight()
+          }
+          this.updateBoard(oldCoordonate.x, oldCoordonate.y);
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
+          this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x, this.currentPlayer.y)
+          this.currentPlayer.movementCount--;
         }
-     if(this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].checkIfCellContainFighter(this.currentPlayer.x, this.currentPlayer.y)){
-      this.fight()
-     }  
-      this.updateBoard(oldCoordonate.x, oldCoordonate.y);
-      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].unsetlightAccessibleCells();
-      this.mapGame.cells[this.currentPlayer.x][this.currentPlayer.y].lightAccessibleCells(this.currentPlayer.x,this.currentPlayer.y) 
-      this.currentPlayer.movementCount--;
+      }
     }
-  }
-}
     if (
       this.currentPlayer.movementCount === 0 &&
       this.currentPlayer.move === true
@@ -144,19 +144,19 @@ nextToPlay() {
     }
   }
 
-// method of swapping the player's weapon with that of the cell. //
+  // method of swapping the player's weapon with that of the cell. //
   swapWeapon(x, y) {
     var weaponExchange = this.mapGame.cells[x][y].weapon;
     this.mapGame.cells[x][y].weapon = this.currentPlayer.weapon;
     this.currentPlayer.weapon = weaponExchange;
     this.displayInfoPlayer();
   }
-// method of creating an image html element. //
+  // method of creating an image html element. //
   createNewElmImage() {
     let cellOrigine = document.createElement("img");
     return cellOrigine;
   }
-// method for updating DOM elements. //
+  // method for updating DOM elements. //
   updateBoard(x, y) {
     this.mapGame.cells[x][y].initCellImage(x, y);
     let cellimgOld = this.createNewElmImage();
@@ -167,22 +167,22 @@ nextToPlay() {
     cellimgNew.src = this.currentPlayer.updateCellFighterImage();
     $(`#${this.currentPlayer.x}-${this.currentPlayer.y}`).html(cellimgNew);
   }
-// start the fighting condition. //
+  // start the fighting condition. //
   fight() {
     this.nextToPlay();
     this.displayTheFight();
     let game = this;
 
-    $(".attack").on("click",function() {
+    $(".attack").on("click", function () {
       game.currentPlayer.defenceStance = false;
       game.currentPlayer.attack(game.opposentPlayer);
     });
-    $(".defence").on("click",function(){
+    $(".defence").on("click", function () {
       game.nextToPlay();
       game.currentPlayer.defenceStance = true;
     });
-  } 
-// fight management method. //
+  }
+  // fight management method. //
   processFight() {
     this.animationOfFighting();
     this.gameOver();
@@ -190,23 +190,23 @@ nextToPlay() {
     this.displayInfoPlayer();
     this.nextToPlay();
   }
-// method of displaying control elements for combat. //
+  // method of displaying control elements for combat. //
   displayTheFight() {
     $("#map-game").replaceWith($(".fight-button").css("display", "flex"));
     document.getElementById("fight-start").play();
   }
-// effect method on the information blocks of the players. //
+  // effect method on the information blocks of the players. //
   animationOfFighting() {
     let game = this;
-      $(".attack").one("click",function(){
-        if (game.opposentPlayer === game.players[0]) {
-       $(".ken-infos").effect("pulsate", "normal", 500); 
+    $(".attack").one("click", function () {
+      if (game.opposentPlayer === game.players[0]) {
+        $(".ken-infos").effect("pulsate", "normal", 500);
       } else {
-        $(".ryu-infos").effect( "pulsate", "normal", 500); 
+        $(".ryu-infos").effect("pulsate", "normal", 500);
       };
     });
   }
-// method that ends the game with a health that has reached 0 or less and an image appears according to the defeated fighter. //
+  // method that ends the game with a health that has reached 0 or less and an image appears according to the defeated fighter. //
   gameOver() {
     if (this.opposentPlayer.health <= 0) {
       document.getElementById("game-over").play();
@@ -260,5 +260,5 @@ CurrentGame.startGame();
 CurrentGame.keyBiding();
 
 window.onload = function () {
-document.getElementById("intro").play();
+  document.getElementById("intro").play();
 };

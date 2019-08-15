@@ -1,10 +1,10 @@
-// Objet de création du plateau de jeux.
+// object MAP of creation of the game board. //
 class Map {
     constructor(boardSize) {
         this.cells = [];
         this.boardSize = boardSize;
     }
-    // méthode de céllule blanche créer dans un array en 2 dimensions.
+    // method of creation of white cell with integration of coordinates. //
     generateCells() {
         for (let x = 0; x < this.boardSize; x++) {
             this.cells[x] = [];
@@ -13,7 +13,7 @@ class Map {
             }
         }
     }
-    //méthode placement aléatoirement les obstacles sur le plateau.
+    // random placement method of obstacles on the board. //  
     placeObstacleCells(obstacle) {
         let i = 0;
         while (i < 9) {
@@ -28,7 +28,7 @@ class Map {
             }
         }
     }
-    //méthode placement aléatoirement les joueurs sur le plateau.
+    // random placement method of Fighters on the board. //  
     placeFighters(fightersArr) {
         fightersArr.forEach(fighter => {
             while (true) {
@@ -36,18 +36,18 @@ class Map {
                 let cell = this.cells[randomNumberXYCell.x][randomNumberXYCell.y];
                 fighter.x = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].x;
                 fighter.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
-               // if(this.cells[randomNumberXYCell.x]<= this.boardSize && this.cells[randomNumberXYCell.y]<= this.boardSize && this.cells[randomNumberXYCell.x]>=0 && this.cells[randomNumberXYCell.y].y>= 0 ){
+                // if(this.cells[randomNumberXYCell.x]<= this.boardSize && this.cells[randomNumberXYCell.y]<= this.boardSize && this.cells[randomNumberXYCell.x]>=0 && this.cells[randomNumberXYCell.y].y>= 0 ){
                 if (cell.obstacle === null && cell.fighter === null) {
-                }else if( fighter.x+1 && fighter.x-1 !== fighter.x || fighter.y+1 && fighter.y-1 !== fighter.y){ 
-                        this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
-                        break
-                    }
-                 else {
+                } else if (fighter.x + 1 && fighter.x - 1 !== fighter.x || fighter.y + 1 && fighter.y - 1 !== fighter.y) {
+                    this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
+                    break
+                }
+                else {
                 }
             }
         });
     }
-    //méthode placement aléatoirement les armes sur le plateau.
+    // random placement method of Weapons on the board. //  
     placeWeapons(weaponsArr) {
         weaponsArr.forEach(weapon => {
             while (true) {
@@ -62,7 +62,7 @@ class Map {
             }
         });
     }
-    // génération de nombre aléatoire pour les méthodes de placement des différents objets grace au coordonée x et y.
+    // random method of coordonates on the board. //  
     randomNumberXY() {
         let randomNumberX = Math.floor(Math.random() * this.boardSize);
         let randomNumberY = Math.floor(Math.random() * this.boardSize);
@@ -71,9 +71,8 @@ class Map {
             y: randomNumberY
         }
     }
-    // méthode de rendu des objets du plateau en affichant les images correspondantes aux objets.
-
-    printOnload() {
+    // method of displaying the elements of the board in the DOM. // 
+    displayOnScreen() {
         for (let x = 0; x < this.boardSize; x++) {
             var rowCell = $("<div class='column'></div>").attr("id", cellInRowX)
             for (let y = 0; y < this.boardSize; y++) {
@@ -83,7 +82,7 @@ class Map {
                 rowCell.append(function () {
                     let caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.img + ">" + "</div>";
                     if (cellInRow.obstacle) {
-                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.obstacle.img  + ">" + "</div>";
+                        caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + cellInRow.obstacle.img + ">" + "</div>";
                     }
                     if (cellInRow.weapon instanceof Weapon) {
                         caseContent = "<div id=" + cellInRowX + "-" + cellInRowY + ">" + "<img src=" + "./images/" + cellInRow.weapon.img + ">" + "</div>";
@@ -104,4 +103,4 @@ mapGenerate.placeObstacleCells(obstacle);
 mapGenerate.placeFighters(fightersArr);
 mapGenerate.placeWeapons(weaponsArr);
 mapGenerate.randomNumberXY();
-mapGenerate.printOnload();
+mapGenerate.displayOnScreen();

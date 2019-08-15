@@ -1,4 +1,4 @@
-// prototype d'armes
+// weapon objet. //
 class Weapon {
     constructor(name, power, x, y, img) {
         this.name = name;
