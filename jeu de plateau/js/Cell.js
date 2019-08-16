@@ -4,7 +4,6 @@ class Cell {
     this.obstacle = obstacle;
     this.weapon = weapon;
     this.fighter = fighter;
-    this.lightCell = lightCell;
     this.x = x;
     this.y = y;
     this.img = img;

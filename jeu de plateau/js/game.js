@@ -178,8 +178,8 @@ class Game {
       game.currentPlayer.attack(game.opposentPlayer);
     });
     $(".defence").on("click", function () {
-      game.nextToPlay();
       game.currentPlayer.defenceStance = true;
+      game.nextToPlay();
     });
   }
   // fight management method. //
@@ -259,6 +259,4 @@ CurrentGame.displayInfoPlayer();
 CurrentGame.startGame();
 CurrentGame.keyBiding();
 
-window.onload = function () {
-  document.getElementById("intro").play();
-};
+

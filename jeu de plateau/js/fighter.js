@@ -40,7 +40,7 @@ class Fighter {
 
     if (opposentPlayer.defenceStance === true) {
       healthValue = healthValue - this.weapon.power * 0.5;
-      this.defenceStance = (this.defenceStance != opposentPlayer.defenceStance);
+      //this.defenceStance = (this.defenceStance != opposentPlayer.defenceStance);
     } else {
       healthValue = healthValue - this.weapon.power;
     }

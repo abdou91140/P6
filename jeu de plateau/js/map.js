@@ -30,19 +30,22 @@ class Map {
     }
     // random placement method of Fighters on the board. //  
     placeFighters(fightersArr) {
+        let boardSize = this.boardSize;
         fightersArr.forEach(fighter => {
             while (true) {
                 let randomNumberXYCell = this.randomNumberXY();
                 let cell = this.cells[randomNumberXYCell.x][randomNumberXYCell.y];
                 fighter.x = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].x;
                 fighter.y = this.cells[randomNumberXYCell.x][randomNumberXYCell.y].y;
-                // if(this.cells[randomNumberXYCell.x]<= this.boardSize && this.cells[randomNumberXYCell.y]<= this.boardSize && this.cells[randomNumberXYCell.x]>=0 && this.cells[randomNumberXYCell.y].y>= 0 ){
                 if (cell.obstacle === null && cell.fighter === null) {
-                } else if (fighter.x + 1 && fighter.x - 1 !== fighter.x || fighter.y + 1 && fighter.y - 1 !== fighter.y) {
-                    this.cells[randomNumberXYCell.x][randomNumberXYCell.y].fighter = fighter;
-                    break
-                }
-                else {
+                    //if(this.cells[randomNumberXYCell.x][randomNumberXYCell.y] != this.cells[boardSize][randomNumberXYCell.y] || this.cells[randomNumberXYCell.x][randomNumberXYCell.y]  != this.cells[0][randomNumberXYCell.y] || this.cells[randomNumberXYCell.x][randomNumberXYCell.y]  != this.cells[randomNumberXYCell.x][boardSize]|| this.cells[randomNumberXYCell.x][randomNumberXYCell.y]  != this.cells[randomNumberXYCell.x][0]){ 
+                    if (this.cells[randomNumberXYCell.x + 1][randomNumberXYCell.y].fighter === null || this.cells[randomNumberXYCell.x - 1][randomNumberXYCell.y].fighter === null || this.cells[randomNumberXYCell.x][randomNumberXYCell.y + 1].fighter === null || this.cell[randomNumberXYCell.x][randomNumberXYCell.y - 1].fighter === null) {
+                        cell.fighter = fighter;
+                        break
+                    }
+                    else {
+
+                    }
                 }
             }
         });
@@ -95,6 +98,9 @@ class Map {
                 $("#map-game").append(rowCell)
             }
         }
+        window.onload = function () {
+            document.getElementById("intro").play();
+        };
     };
 }
 var mapGenerate = new Map(9);
