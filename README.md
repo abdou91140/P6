@@ -1,5 +1,4 @@
 # P6
 Jeux de plateau au tour par tour
-Version brute du projet. 
-- plateau créer.
-- et systeme de déplacement au tour par tour.
+
+ https://abdou91140.github.io/P6/
